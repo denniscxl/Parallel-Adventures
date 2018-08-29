@@ -1,0 +1,3144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00fe8e99c9bab4febbc92f45215a4563, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier: 
+  _unitData:
+  - id: 0
+    name: 0
+    maxHp: 500
+    maxMp: 800
+    speed: 1
+    rotate: 3
+    ken: 2
+    atkRange: 5
+    atkInterval: 2
+    strength: 1
+    agility: 2
+    intelligence: 1
+    skillConfigID: 0
+    description: 1
+    job: 0
+    layerMask: 1
+    costFood: 100
+    costBelief: 50
+  - id: 1
+    name: 2
+    maxHp: 600
+    maxMp: 700
+    speed: 1
+    rotate: 3
+    ken: 3
+    atkRange: 15
+    atkInterval: 2
+    strength: 2
+    agility: 4
+    intelligence: 3
+    skillConfigID: 1
+    description: 3
+    job: 1
+    layerMask: 3
+    costFood: 200
+    costBelief: 100
+  - id: 2
+    name: 4
+    maxHp: 700
+    maxMp: 600
+    speed: 1
+    rotate: 3
+    ken: 4
+    atkRange: 25
+    atkInterval: 2
+    strength: 3
+    agility: 6
+    intelligence: 5
+    skillConfigID: 2
+    description: 5
+    job: 2
+    layerMask: 5
+    costFood: 100
+    costBelief: 200
+  - id: 3
+    name: 6
+    maxHp: 800
+    maxMp: 500
+    speed: 1
+    rotate: 3
+    ken: 2
+    atkRange: 5
+    atkInterval: 2
+    strength: 4
+    agility: 8
+    intelligence: 7
+    skillConfigID: 0
+    description: 7
+    job: 3
+    layerMask: 7
+    costFood: 200
+    costBelief: 100
+  - id: 4
+    name: 8
+    maxHp: 900
+    maxMp: 400
+    speed: 1
+    rotate: 3
+    ken: 3
+    atkRange: 15
+    atkInterval: 2
+    strength: 5
+    agility: 10
+    intelligence: 9
+    skillConfigID: 1
+    description: 9
+    job: 4
+    layerMask: 1
+    costFood: 100
+    costBelief: 200
+  - id: 5
+    name: 10
+    maxHp: 1000
+    maxMp: 300
+    speed: 1
+    rotate: 3
+    ken: 4
+    atkRange: 25
+    atkInterval: 2
+    strength: 6
+    agility: 12
+    intelligence: 11
+    skillConfigID: 2
+    description: 11
+    job: 5
+    layerMask: 3
+    costFood: 200
+    costBelief: 50
+  _expData:
+  - id: 0
+    level: 1
+    exp: 500
+    skill: 50
+  - id: 1
+    level: 2
+    exp: 1000
+    skill: 100
+  - id: 2
+    level: 3
+    exp: 2000
+    skill: 200
+  - id: 3
+    level: 4
+    exp: 4000
+    skill: 400
+  - id: 4
+    level: 5
+    exp: 8000
+    skill: 800
+  - id: 5
+    level: 6
+    exp: 9500
+    skill: 850
+  - id: 6
+    level: 7
+    exp: 11800
+    skill: 1030
+  - id: 7
+    level: 8
+    exp: 14100
+    skill: 1210
+  - id: 8
+    level: 9
+    exp: 16400
+    skill: 1390
+  - id: 9
+    level: 10
+    exp: 18700
+    skill: 1570
+  - id: 10
+    level: 11
+    exp: 21000
+    skill: 1750
+  - id: 11
+    level: 12
+    exp: 23300
+    skill: 1930
+  - id: 12
+    level: 13
+    exp: 25600
+    skill: 2110
+  - id: 13
+    level: 14
+    exp: 27900
+    skill: 2290
+  - id: 14
+    level: 15
+    exp: 30200
+    skill: 2470
+  - id: 15
+    level: 16
+    exp: 32500
+    skill: 2650
+  - id: 16
+    level: 17
+    exp: 34800
+    skill: 2830
+  - id: 17
+    level: 18
+    exp: 37100
+    skill: 3010
+  - id: 18
+    level: 19
+    exp: 39400
+    skill: 3190
+  - id: 19
+    level: 20
+    exp: 41700
+    skill: 3370
+  - id: 20
+    level: 21
+    exp: 44000
+    skill: 3550
+  - id: 21
+    level: 22
+    exp: 46300
+    skill: 3730
+  - id: 22
+    level: 23
+    exp: 48600
+    skill: 3910
+  - id: 23
+    level: 24
+    exp: 50900
+    skill: 4090
+  - id: 24
+    level: 25
+    exp: 53200
+    skill: 4270
+  - id: 25
+    level: 26
+    exp: 55500
+    skill: 4450
+  - id: 26
+    level: 27
+    exp: 57800
+    skill: 4630
+  - id: 27
+    level: 28
+    exp: 60100
+    skill: 4810
+  - id: 28
+    level: 29
+    exp: 62400
+    skill: 4990
+  - id: 29
+    level: 30
+    exp: 64700
+    skill: 5170
+  - id: 30
+    level: 31
+    exp: 67000
+    skill: 5350
+  - id: 31
+    level: 32
+    exp: 69300
+    skill: 5530
+  - id: 32
+    level: 33
+    exp: 71600
+    skill: 5710
+  - id: 33
+    level: 34
+    exp: 73900
+    skill: 5890
+  - id: 34
+    level: 35
+    exp: 76200
+    skill: 6070
+  - id: 35
+    level: 36
+    exp: 78500
+    skill: 6250
+  - id: 36
+    level: 37
+    exp: 80800
+    skill: 6430
+  - id: 37
+    level: 38
+    exp: 83100
+    skill: 6610
+  - id: 38
+    level: 39
+    exp: 85400
+    skill: 6790
+  - id: 39
+    level: 40
+    exp: 87700
+    skill: 6970
+  - id: 40
+    level: 41
+    exp: 90000
+    skill: 7150
+  - id: 41
+    level: 42
+    exp: 92300
+    skill: 7330
+  - id: 42
+    level: 43
+    exp: 94600
+    skill: 7510
+  - id: 43
+    level: 44
+    exp: 96900
+    skill: 7690
+  - id: 44
+    level: 45
+    exp: 99200
+    skill: 7870
+  - id: 45
+    level: 46
+    exp: 101500
+    skill: 8050
+  - id: 46
+    level: 47
+    exp: 103800
+    skill: 8230
+  - id: 47
+    level: 48
+    exp: 106100
+    skill: 8410
+  - id: 48
+    level: 49
+    exp: 108400
+    skill: 8590
+  - id: 49
+    level: 50
+    exp: 110700
+    skill: 8770
+  - id: 50
+    level: 51
+    exp: 113000
+    skill: 8950
+  - id: 51
+    level: 52
+    exp: 115300
+    skill: 9130
+  - id: 52
+    level: 53
+    exp: 117600
+    skill: 9310
+  - id: 53
+    level: 54
+    exp: 119900
+    skill: 9490
+  - id: 54
+    level: 55
+    exp: 122200
+    skill: 9670
+  - id: 55
+    level: 56
+    exp: 124500
+    skill: 9850
+  - id: 56
+    level: 57
+    exp: 126800
+    skill: 10030
+  - id: 57
+    level: 58
+    exp: 129100
+    skill: 10210
+  - id: 58
+    level: 59
+    exp: 131400
+    skill: 10390
+  - id: 59
+    level: 60
+    exp: 133700
+    skill: 10570
+  _skillData:
+  - id: 0
+    key: 0
+    name: 0
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 1
+  - id: 1
+    key: 1
+    name: 0
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 1
+  - id: 2
+    key: 2
+    name: 0
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 1
+  - id: 3
+    key: 3
+    name: 0
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 1
+  - id: 4
+    key: 4
+    name: 0
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 1
+  - id: 5
+    key: 5
+    name: 0
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 1
+  - id: 6
+    key: 6
+    name: 0
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 1
+  - id: 7
+    key: 7
+    name: 0
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 1
+  - id: 8
+    key: 8
+    name: 0
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 1
+  - id: 9
+    key: 9
+    name: 0
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 1
+  - id: 10
+    key: 100
+    name: 2
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 3
+  - id: 11
+    key: 101
+    name: 2
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 3
+  - id: 12
+    key: 102
+    name: 2
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 3
+  - id: 13
+    key: 103
+    name: 2
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 3
+  - id: 14
+    key: 104
+    name: 2
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 3
+  - id: 15
+    key: 105
+    name: 2
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 3
+  - id: 16
+    key: 106
+    name: 2
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 3
+  - id: 17
+    key: 107
+    name: 2
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 3
+  - id: 18
+    key: 108
+    name: 2
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 3
+  - id: 19
+    key: 109
+    name: 2
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 3
+  - id: 20
+    key: 200
+    name: 4
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 5
+  - id: 21
+    key: 201
+    name: 4
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 5
+  - id: 22
+    key: 202
+    name: 4
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 5
+  - id: 23
+    key: 203
+    name: 4
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 5
+  - id: 24
+    key: 204
+    name: 4
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 5
+  - id: 25
+    key: 205
+    name: 4
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 5
+  - id: 26
+    key: 206
+    name: 4
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 5
+  - id: 27
+    key: 207
+    name: 4
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 5
+  - id: 28
+    key: 208
+    name: 4
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 5
+  - id: 29
+    key: 209
+    name: 4
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 5
+  - id: 30
+    key: 300
+    name: 6
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 7
+  - id: 31
+    key: 301
+    name: 6
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 7
+  - id: 32
+    key: 302
+    name: 6
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 7
+  - id: 33
+    key: 303
+    name: 6
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 7
+  - id: 34
+    key: 304
+    name: 6
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 7
+  - id: 35
+    key: 305
+    name: 6
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 7
+  - id: 36
+    key: 306
+    name: 6
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 7
+  - id: 37
+    key: 307
+    name: 6
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 7
+  - id: 38
+    key: 308
+    name: 6
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 7
+  - id: 39
+    key: 309
+    name: 6
+    strength: 1
+    agility: 1
+    intelligence: 1
+    demandA: -1
+    demandB: -1
+    demandC: -1
+    description: 7
+  _skillTreeData:
+  - id: 0
+    skills: 000000000a00000014000000
+  - id: 1
+    skills: 140000001e000000
+  - id: 2
+    skills: 00000000140000001e000000
+  - id: 3
+    skills: 
+  _storeData:
+  - id: 0
+    goldPay: 6
+    goldEarnings: 1000
+    diamondPay: 6
+    diamondEarnings: 100
+    itemPay: 6
+    itemEarnings: 1
+  - id: 1
+    goldPay: 18
+    goldEarnings: 4000
+    diamondPay: 18
+    diamondEarnings: 350
+    itemPay: 18
+    itemEarnings: 1
+  - id: 2
+    goldPay: 48
+    goldEarnings: 15000
+    diamondPay: 48
+    diamondEarnings: 1200
+    itemPay: 48
+    itemEarnings: 1
+  - id: 3
+    goldPay: 98
+    goldEarnings: 35000
+    diamondPay: 98
+    diamondEarnings: 2500
+    itemPay: 98
+    itemEarnings: 1
+  - id: 4
+    goldPay: 168
+    goldEarnings: 90000
+    diamondPay: 168
+    diamondEarnings: 5500
+    itemPay: 168
+    itemEarnings: 1
+  - id: 5
+    goldPay: 648
+    goldEarnings: 500000
+    diamondPay: 648
+    diamondEarnings: 25000
+    itemPay: 648
+    itemEarnings: 1
+  _lotteryData:
+  - id: 0
+    coin: 0
+    diamond: 0
+  - id: 1
+    coin: 300
+    diamond: 100
+  - id: 2
+    coin: 0
+    diamond: 0
+  - id: 3
+    coin: 0
+    diamond: 0
+  - id: 4
+    coin: 1350
+    diamond: 400
+  - id: 5
+    coin: 0
+    diamond: 0
+  - id: 6
+    coin: 0
+    diamond: 0
+  - id: 7
+    coin: 0
+    diamond: 0
+  - id: 8
+    coin: 0
+    diamond: 0
+  - id: 9
+    coin: 2295
+    diamond: 700
+  _equipmentData:
+  - id: 0
+    name: 0
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 1
+    name: 2
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 2
+    name: 4
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 3
+    name: 6
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 4
+    name: 0
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 5
+    name: 2
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 6
+    name: 4
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 7
+    name: 6
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 8
+    name: 0
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 9
+    name: 2
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 10
+    name: 4
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 11
+    name: 6
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 12
+    name: 0
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 13
+    name: 2
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 14
+    name: 4
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 15
+    name: 6
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 16
+    name: 0
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 17
+    name: 2
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 18
+    name: 4
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 19
+    name: 6
+    part: 0
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 20
+    name: 0
+    part: 1
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 21
+    name: 2
+    part: 1
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 22
+    name: 4
+    part: 1
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 23
+    name: 6
+    part: 1
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 24
+    name: 0
+    part: 1
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 25
+    name: 2
+    part: 1
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 26
+    name: 4
+    part: 1
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 27
+    name: 6
+    part: 1
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 28
+    name: 0
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 29
+    name: 2
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 30
+    name: 4
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 31
+    name: 6
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 32
+    name: 0
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 33
+    name: 2
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 34
+    name: 4
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 35
+    name: 6
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 36
+    name: 0
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 37
+    name: 2
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 38
+    name: 4
+    part: 2
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 39
+    name: 6
+    part: 3
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 40
+    name: 0
+    part: 3
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 41
+    name: 2
+    part: 3
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 42
+    name: 4
+    part: 3
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 43
+    name: 6
+    part: 3
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 44
+    name: 0
+    part: 3
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 45
+    name: 2
+    part: 3
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 46
+    name: 4
+    part: 3
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 47
+    name: 6
+    part: 3
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 48
+    name: 0
+    part: 3
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 49
+    name: 2
+    part: 4
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 50
+    name: 4
+    part: 4
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 51
+    name: 6
+    part: 4
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 52
+    name: 0
+    part: 4
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 53
+    name: 2
+    part: 4
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 54
+    name: 4
+    part: 5
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 55
+    name: 6
+    part: 5
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 56
+    name: 0
+    part: 5
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 57
+    name: 2
+    part: 5
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 58
+    name: 4
+    part: 5
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 59
+    name: 6
+    part: 6
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 60
+    name: 0
+    part: 6
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 61
+    name: 2
+    part: 6
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 62
+    name: 4
+    part: 6
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 63
+    name: 6
+    part: 6
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 64
+    name: 0
+    part: 7
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  - id: 65
+    name: 2
+    part: 7
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 3
+  - id: 66
+    name: 4
+    part: 7
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 5
+  - id: 67
+    name: 6
+    part: 7
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 7
+  - id: 68
+    name: 0
+    part: 7
+    job: -1
+    strength: 1
+    agility: 1
+    intelligence: 1
+    skillEffectA: -1
+    skillEffectB: -1
+    skillEffectC: -1
+    description: 1
+  _consumeData:
+  - id: 0
+    name: 0
+    effect: 00000000
+    description: 1
+  - id: 1
+    name: 2
+    effect: 00000000
+    description: 3
+  - id: 2
+    name: 4
+    effect: 00000000
+    description: 5
+  - id: 3
+    name: 6
+    effect: 00000000
+    description: 7
+  - id: 4
+    name: 0
+    effect: 00000000
+    description: 1
+  - id: 5
+    name: 2
+    effect: 00000000
+    description: 3
+  - id: 6
+    name: 4
+    effect: 00000000
+    description: 5
+  - id: 7
+    name: 6
+    effect: 00000000
+    description: 7
+  - id: 8
+    name: 0
+    effect: 00000000
+    description: 1
+  - id: 9
+    name: 2
+    effect: 00000000
+    description: 3
+  - id: 10
+    name: 4
+    effect: 00000000
+    description: 5
+  _inventoryUpgradeData:
+  - id: 0
+    coin: 0
+    diamond: 300
+  - id: 1
+    coin: 0
+    diamond: 500
+  - id: 2
+    coin: 0
+    diamond: 800
+  - id: 3
+    coin: 0
+    diamond: 1200
+  - id: 4
+    coin: 0
+    diamond: 1700
+  - id: 5
+    coin: 0
+    diamond: 2300
+  - id: 6
+    coin: 0
+    diamond: 3000
+  - id: 7
+    coin: 0
+    diamond: 3800
+  - id: 8
+    coin: 0
+    diamond: 4700
+  - id: 9
+    coin: 0
+    diamond: 5700
+  - id: 10
+    coin: 0
+    diamond: 6800
+  _achievementData:
+  - id: 0
+    action: 0
+    points: 10
+    title: 1
+    parameter: 0100000001000000
+  - id: 1
+    action: 0
+    points: 20
+    title: 2
+    parameter: 010000000a000000
+  - id: 2
+    action: 0
+    points: 50
+    title: 3
+    parameter: 0100000032000000
+  - id: 3
+    action: 0
+    points: 100
+    title: 4
+    parameter: 0100000064000000
+  - id: 4
+    action: 0
+    points: 200
+    title: 5
+    parameter: 01000000f4010000
+  - id: 5
+    action: 0
+    points: 300
+    title: 6
+    parameter: 01000000e8030000
+  - id: 6
+    action: 0
+    points: 10
+    title: 7
+    parameter: 0200000001000000
+  - id: 7
+    action: 0
+    points: 20
+    title: 8
+    parameter: 020000000a000000
+  - id: 8
+    action: 0
+    points: 50
+    title: 9
+    parameter: 0200000032000000
+  - id: 9
+    action: 0
+    points: 100
+    title: 10
+    parameter: 0200000064000000
+  - id: 10
+    action: 0
+    points: 200
+    title: 11
+    parameter: 02000000f4010000
+  - id: 11
+    action: 0
+    points: 300
+    title: 12
+    parameter: 02000000e8030000
+  - id: 12
+    action: 0
+    points: 10
+    title: 13
+    parameter: 0300000001000000
+  - id: 13
+    action: 0
+    points: 20
+    title: 14
+    parameter: 030000000a000000
+  - id: 14
+    action: 0
+    points: 50
+    title: 15
+    parameter: 0300000032000000
+  - id: 15
+    action: 0
+    points: 100
+    title: 16
+    parameter: 0300000064000000
+  - id: 16
+    action: 0
+    points: 200
+    title: 17
+    parameter: 03000000f4010000
+  - id: 17
+    action: 0
+    points: 300
+    title: 18
+    parameter: 03000000e8030000
+  - id: 18
+    action: 0
+    points: 10
+    title: 19
+    parameter: 0400000001000000
+  - id: 19
+    action: 0
+    points: 20
+    title: 20
+    parameter: 040000000a000000
+  - id: 20
+    action: 0
+    points: 50
+    title: 21
+    parameter: 0400000032000000
+  - id: 21
+    action: 0
+    points: 100
+    title: 22
+    parameter: 0400000064000000
+  - id: 22
+    action: 0
+    points: 200
+    title: 23
+    parameter: 04000000f4010000
+  - id: 23
+    action: 0
+    points: 300
+    title: 24
+    parameter: 04000000e8030000
+  - id: 24
+    action: 0
+    points: 10
+    title: 25
+    parameter: 0500000001000000
+  - id: 25
+    action: 0
+    points: 20
+    title: 26
+    parameter: 050000000a000000
+  - id: 26
+    action: 0
+    points: 50
+    title: 27
+    parameter: 0500000032000000
+  - id: 27
+    action: 0
+    points: 100
+    title: 28
+    parameter: 0500000064000000
+  - id: 28
+    action: 0
+    points: 200
+    title: 29
+    parameter: 05000000f4010000
+  - id: 29
+    action: 0
+    points: 300
+    title: 30
+    parameter: 05000000e8030000
+  - id: 30
+    action: 0
+    points: 10
+    title: 31
+    parameter: 0600000001000000
+  - id: 31
+    action: 0
+    points: 20
+    title: 32
+    parameter: 060000000a000000
+  - id: 32
+    action: 0
+    points: 50
+    title: 33
+    parameter: 0600000032000000
+  - id: 33
+    action: 0
+    points: 100
+    title: 34
+    parameter: 0600000064000000
+  - id: 34
+    action: 0
+    points: 200
+    title: 35
+    parameter: 06000000f4010000
+  - id: 35
+    action: 0
+    points: 300
+    title: 36
+    parameter: 06000000e8030000
+  - id: 36
+    action: 0
+    points: 10
+    title: 37
+    parameter: 0700000001000000
+  - id: 37
+    action: 0
+    points: 20
+    title: 38
+    parameter: 070000000a000000
+  - id: 38
+    action: 0
+    points: 50
+    title: 39
+    parameter: 0700000032000000
+  - id: 39
+    action: 0
+    points: 100
+    title: 40
+    parameter: 0700000064000000
+  - id: 40
+    action: 0
+    points: 200
+    title: 41
+    parameter: 07000000f4010000
+  - id: 41
+    action: 0
+    points: 300
+    title: 42
+    parameter: 07000000e8030000
+  - id: 42
+    action: 0
+    points: 10
+    title: 43
+    parameter: 0800000001000000
+  - id: 43
+    action: 0
+    points: 20
+    title: 44
+    parameter: 080000000a000000
+  - id: 44
+    action: 0
+    points: 50
+    title: 45
+    parameter: 0800000032000000
+  - id: 45
+    action: 0
+    points: 100
+    title: 46
+    parameter: 0800000064000000
+  - id: 46
+    action: 0
+    points: 200
+    title: 47
+    parameter: 08000000f4010000
+  - id: 47
+    action: 0
+    points: 300
+    title: 48
+    parameter: 08000000e8030000
+  - id: 48
+    action: 0
+    points: 10
+    title: 49
+    parameter: 0900000001000000
+  - id: 49
+    action: 0
+    points: 20
+    title: 50
+    parameter: 090000000a000000
+  - id: 50
+    action: 0
+    points: 50
+    title: 51
+    parameter: 0900000032000000
+  - id: 51
+    action: 0
+    points: 100
+    title: 52
+    parameter: 0900000064000000
+  - id: 52
+    action: 0
+    points: 200
+    title: 53
+    parameter: 09000000f4010000
+  - id: 53
+    action: 0
+    points: 300
+    title: 54
+    parameter: 09000000e8030000
+  - id: 54
+    action: 0
+    points: 10
+    title: 55
+    parameter: 0a00000001000000
+  - id: 55
+    action: 0
+    points: 20
+    title: 56
+    parameter: 0a0000000a000000
+  - id: 56
+    action: 0
+    points: 50
+    title: 57
+    parameter: 0a00000032000000
+  - id: 57
+    action: 0
+    points: 100
+    title: 58
+    parameter: 0a00000064000000
+  - id: 58
+    action: 0
+    points: 200
+    title: 59
+    parameter: 0a000000f4010000
+  - id: 59
+    action: 0
+    points: 300
+    title: 60
+    parameter: 0a000000e8030000
+  _localizationData:
+  - id: 0
+    english: ID
+    chinese: "\u7D22\u5F15"
+  - id: 1
+    english: Power
+    chinese: "\u6218\u529B"
+  - id: 2
+    english: Name
+    chinese: "\u540D\u79F0"
+  - id: 3
+    english: Level
+    chinese: "\u7B49\u7EA7"
+  - id: 4
+    english: Max Exp
+    chinese: "\u6700\u5927\u7ECF\u9A8C\u503C"
+  - id: 5
+    english: Exp
+    chinese: "\u7ECF\u9A8C\u503C"
+  - id: 6
+    english: Skill Level
+    chinese: "\u6280\u80FD\u7B49\u7EA7"
+  - id: 7
+    english: Max Skill Exp
+    chinese: "\u6700\u5927\u6280\u80FD\u7ECF\u9A8C"
+  - id: 8
+    english: Skill Exp
+    chinese: "\u6280\u80FD\u7ECF\u9A8C\u503C"
+  - id: 9
+    english: Max Hp
+    chinese: "\u6700\u5927\u8840\u91CF"
+  - id: 10
+    english: Hp
+    chinese: "\u8840\u91CF"
+  - id: 11
+    english: Max Mp
+    chinese: "\u6700\u5927\u80FD\u91CF"
+  - id: 12
+    english: Mp
+    chinese: "\u80FD\u91CF"
+  - id: 13
+    english: Mood
+    chinese: "\u5FC3\u60C5"
+  - id: 14
+    english: Speed
+    chinese: "\u901F\u5EA6"
+  - id: 15
+    english: Strength
+    chinese: "\u529B\u91CF"
+  - id: 16
+    english: Agility
+    chinese: "\u654F\u6377"
+  - id: 17
+    english: Intelligence
+    chinese: "\u667A\u529B"
+  - id: 18
+    english: Physics Attack
+    chinese: "\u7269\u7406\u653B\u51FB"
+  - id: 19
+    english: Magic Attack
+    chinese: "\u9B54\u6CD5\u653B\u51FB"
+  - id: 20
+    english: Physics Defense
+    chinese: "\u7269\u7406\u9632\u5FA1"
+  - id: 21
+    english: Magic Defense
+    chinese: "\u9B54\u6CD5\u9632\u5FA1"
+  - id: 22
+    english: Debarb
+    chinese: "\u56DE\u907F"
+  - id: 23
+    english: Rotation
+    chinese: "\u65CB\u8F6C"
+  - id: 24
+    english: Direction
+    chinese: "\u65B9\u5411"
+  - id: 25
+    english: Death Count
+    chinese: "\u6B7B\u4EA1\u6570"
+  - id: 26
+    english: Kill Count
+    chinese: "\u51FB\u6740\u6570"
+  - id: 27
+    english: UsedSkill Point
+    chinese: "\u5DF2\u4F7F\u7528\u6280\u80FD\u70B9"
+  - id: 28
+    english: Tota lSkill Point
+    chinese: "\u6280\u80FD\u70B9\u603B\u6570"
+  - id: 29
+    english: Camp
+    chinese: "\u9635\u8425"
+  - id: 30
+    english: Output
+    chinese: "\u8D44\u6E90\u4EA7\u51FA\u91CF"
+  - id: 31
+    english: Coins
+    chinese: "\u91D1\u5E01"
+  - id: 32
+    english: Diamond
+    chinese: "\u94BB\u77F3"
+  - id: 33
+    english: Belief
+    chinese: "\u4FE1\u4EF0"
+  - id: 34
+    english: Food
+    chinese: "\u98DF\u7269"
+  - id: 35
+    english: Inventory Level
+    chinese: "\u80CC\u5305\u7B49\u7EA7"
+  - id: 36
+    english: Sound
+    chinese: "\u97F3\u6548"
+  - id: 37
+    english: Music
+    chinese: "\u97F3\u4E50"
+  - id: 38
+    english: Quality
+    chinese: "\u6E32\u67D3\u8D28\u91CF"
+  - id: 39
+    english: Language
+    chinese: "\u8BED\u8A00"
+  - id: 40
+    english: All Jobs
+    chinese: "\u5168\u804C\u4E1A"
+  - id: 41
+    english: UpgradeSuccess
+    chinese: "\u5347\u7EA7\u6210\u529F"
+  - id: 42
+    english: Parallel Adventures
+    chinese: "\u5E73\u884C\u7269\u8BED"
+  - id: 43
+    english: Start
+    chinese: "\u5F00\u59CB"
+  - id: 44
+    english: Formation
+    chinese: "\u9635\u5BB9"
+  - id: 45
+    english: Skill
+    chinese: "\u6280\u80FD"
+  - id: 46
+    english: Equipment
+    chinese: "\u88C5\u5907"
+  - id: 47
+    english: Inventory
+    chinese: "\u80CC\u5305"
+  - id: 48
+    english: Lottery
+    chinese: "\u4E50\u900F"
+  - id: 49
+    english: Store
+    chinese: "\u5546\u5E97"
+  - id: 50
+    english: Achi
+    chinese: "\u6210\u5C31"
+  - id: 51
+    english: Info
+    chinese: "\u4FE1\u606F"
+  - id: 52
+    english: Depart
+    chinese: " \u51FA\u53D1"
+  - id: 53
+    english: Item
+    chinese: "\u7269\u54C1 "
+  - id: 54
+    english: Lv
+    chinese: "\u7B49\u7EA7"
+  - id: 55
+    english: Skill Lv
+    chinese: "\u6280\u80FD\u7B49\u7EA7"
+  - id: 56
+    english: KD
+    chinese: "\u51FB\u6740\u6B7B\u4EA1\u6BD4"
+  - id: 57
+    english: Credits
+    chinese: "\u5236\u4F5C\u540D\u5355"
+  - id: 58
+    english: Use
+    chinese: "\u4F7F\u7528"
+  - id: 59
+    english: Throw
+    chinese: "\u4E22\u5F03"
+  - id: 60
+    english: STR
+    chinese: "\u529B\u91CF"
+  - id: 61
+    english: AGI
+    chinese: "\u654F\u6377"
+  - id: 62
+    english: INT
+    chinese: "\u667A\u529B"
+  - id: 63
+    english: Back
+    chinese: "\u8FD4\u56DE"
+  - id: 64
+    english: Draw
+    chinese: "\u62BD\u5361"
+  - id: 65
+    english: Remove Data
+    chinese: "\u6E05\u9664\u5B58\u6863"
+  - id: 66
+    english: TryAgain
+    chinese: "\u518D\u6765\u4E00\u6B21"
+  - id: 67
+    english: Quality
+    chinese: "\u6E32\u67D3\u7B49\u7EA7"
+  - id: 68
+    english: High
+    chinese: "\u9AD8"
+  - id: 69
+    english: Medium
+    chinese: "\u4E2D"
+  - id: 70
+    english: Low
+    chinese: "\u4F4E "
+  - id: 71
+    english: English
+    chinese: "\u82F1\u8BED"
+  - id: 72
+    english: Chinese
+    chinese: "\u4E2D\u6587"
+  - id: 73
+    english: Back to lobby
+    chinese: "\u8FD4\u56DE\u5927\u5385"
+  - id: 74
+    english: Reset
+    chinese: "\u91CD\u7F6E"
+  - id: 75
+    english: Weapon
+    chinese: "\u6B66\u5668"
+  - id: 76
+    english: Head
+    chinese: "\u5934"
+  - id: 77
+    english: Body
+    chinese: "\u8EAB\u4F53"
+  - id: 78
+    english: Leg
+    chinese: "\u817F"
+  - id: 79
+    english: Hand
+    chinese: "\u624B"
+  - id: 80
+    english: Foot
+    chinese: "\u8DB3"
+  - id: 81
+    english: Jewelry
+    chinese: "\u9996\u9970"
+  - id: 82
+    english: Wing
+    chinese: "\u7FC5\u8180"
+  - id: 83
+    english: Get new card {0}
+    chinese: "\u83B7\u5F97\u65B0\u5361\u724C {0}"
+  - id: 84
+    english: Get new item {0}
+    chinese: "\u83B7\u5F97\u65B0\u7269\u54C1 {0}"
+  - id: 85
+    english: Inventory full. Do you want pack up it.
+    chinese: "\u80CC\u5305\u5DF2\u6EE1. \u662F\u5426\u6574\u7406\u80CC\u5305?"
+  - id: 86
+    english: Yes
+    chinese: "\u662F"
+  - id: 87
+    english: No
+    chinese: "\u5426"
+  - id: 88
+    english: Do you want pay {0} diamond to upgrade inventory?
+    chinese: "\u662F\u5426\u82B1\u8D39 {0} \u94BB\u77F3\u5347\u7EA7\u80CC\u5305?"
+  - id: 89
+    english: Not enough resource. Do you want jump to store?
+    chinese: "\u8D44\u6E90\u4E0D\u8DB3. \u662F\u5426\u8DF3\u8F6C\u5546\u5E97?"
+  - id: 90
+    english: "\u662F\u5426\u91CD\u7F6E\u6280\u80FD\u70B9?"
+    chinese: "\u662F\u5426\u91CD\u7F6E\u6280\u80FD\u70B9?"
+  - id: 91
+    english: Tips
+    chinese: "\u63D0\u793A"
+  - id: 92
+    english: OK
+    chinese: "\u53EF\u4EE5"
+  - id: 93
+    english: Cancel
+    chinese: "\u53D6\u6D88"
+  - id: 94
+    english: Victory
+    chinese: "\u80DC\u5229"
+  - id: 95
+    english: Defeat
+    chinese: "\u5931\u8D25"
+  - id: 96
+    english: Score
+    chinese: "\u5F97\u5206"
+  - id: 97
+    english: Exit Game
+    chinese: "\u79BB\u5F00\u6E38\u620F"
+  - id: 98
+    english: Points
+    chinese: "\u70B9\u6570"
+  - id: 99
+    english: ALL
+    chinese: "\u5168\u90E8"
+  - id: 100
+    english: Completed
+    chinese: "\u5DF2\u8FBE\u6210"
+  - id: 101
+    english: Kill Count
+    chinese: "\u603B\u51FB\u6740\u6570"
+  - id: 102
+    english: Death Count
+    chinese: "\u89D2\u8272\u6B7B\u4EA1\u603B\u6570"
+  - id: 103
+    english: Coin Cost Count
+    chinese: "\u7D2F\u79EF\u91D1\u5E01\u652F\u51FA"
+  - id: 104
+    english: Diamond Cost Count
+    chinese: "\u7D2F\u79EF\u94BB\u77F3\u652F\u51FA"
+  - id: 105
+    english: Fighting Count
+    chinese: "\u7D2F\u79EF\u6218\u6597\u6570"
+  - id: 106
+    english: Consume Cost Count
+    chinese: "\u7D2F\u79EF\u6D88\u8017\u54C1\u4F7F\u7528\u6570"
+  - id: 107
+    english: Throw Count
+    chinese: "\u7D2F\u79EF\u4E22\u5F03\u7269\u54C1\u6570"
+  - id: 108
+    english: Skill Upgrade Count
+    chinese: "\u7D2F\u79EF\u6280\u80FD\u5347\u7EA7\u6570"
+  - id: 109
+    english: Win Count
+    chinese: "\u7D2F\u79EF\u80DC\u5229\u6570"
+  - id: 110
+    english: Defeated Count
+    chinese: "\u7D2F\u79EF\u5931\u8D25\u6570"
+  - id: 111
+    english: Create Time
+    chinese: "\u9996\u6B21\u6E38\u620F\u65F6\u95F4"
+  - id: 112
+    english: Title
+    chinese: "\u79F0\u53F7"
+  - id: 113
+    english: Story Mode
+    chinese: "\u6545\u4E8B\u6A21\u5F0F"
+  - id: 114
+    english: Athletics Mode
+    chinese: "\u7ADE\u6280\u6A21\u5F0F"
+  - id: 115
+    english: Producer
+    chinese: "\u5236\u4F5C\u4EBA"
+  - id: 116
+    english: Programmer
+    chinese: "\u7A0B\u5E8F"
+  - id: 117
+    english: Designer
+    chinese: "\u7B56\u5212"
+  - id: 118
+    english: Artist
+    chinese: "\u7F8E\u672F"
+  - id: 119
+    english: Special Thanks
+    chinese: "\u7279\u522B\u9E23\u8C22"
+  - id: 120
+    english: Chen xiao lei
+    chinese: "\u9648\u6F47\u78CA"
+  - id: 121
+    english: Zhang hao yu
+    chinese: "\u5F20\u6D69\u5B87"
+  - id: 122
+    english: Xu qing qing
+    chinese: "\u5F90\u9752\u9752"
+  - id: 123
+    english: Xu ping
+    chinese: "\u5F90\u5E73"
+  - id: 124
+    english: Mail
+    chinese: "\u90AE\u7BB1"
+  - id: 125
+    english: Do you want upgrade skill?
+    chinese: "\u662F\u5426\u5347\u7EA7\u6B64\u6280\u80FD?"
+  - id: 126
+    english: Do you want set the adventurous hero Because the current is empty.
+    chinese: "\u5F53\u524D\u672A\u8BBE\u7F6E\u5192\u9669\u89D2\u8272. \u662F\u5426\u524D\u5F80\u8BBE\u7F6E?"
+  - id: 127
+    english: Move
+    chinese: "\u79FB\u52A8"
+  - id: 128
+    english: Attack
+    chinese: "\u653B\u51FB"
+  - id: 129
+    english: Support
+    chinese: "\u652F\u63F4"
+  - id: 130
+    english: Defense
+    chinese: "\u9632\u5FA1"
+  - id: 131
+    english: Pursuit
+    chinese: "\u8FFD\u51FB"
+  - id: 132
+    english: Retreat
+    chinese: "\u64A4\u9000"
+  - id: 133
+    english: Ambush
+    chinese: "\u4F0F\u51FB"
+  - id: 134
+    english: Detail
+    chinese: "\u8BE6\u60C5"
+  - id: 135
+    english: Village
+    chinese: "\u636E\u70B9"
+  - id: 136
+    english: Res Point
+    chinese: "\u8D44\u6E90\u70B9"
+  - id: 137
+    english: Change
+    chinese: "\u53D8\u66F4"
+  - id: 138
+    english: Doge
+    chinese: "\u683C\u6321"
+  _localizationErrorCodeData:
+  - id: 0
+    english: Card Data Missing
+    chinese: "\u5361\u724C\u6570\u636E\u4E22\u5931"
+  - id: 1
+    english: Equipment Data Missing
+    chinese: "\u88C5\u5907\u6570\u636E\u4E22\u5931"
+  - id: 2
+    english: Skill Data Missing
+    chinese: "\u6280\u80FD\u6570\u636E\u4E22\u5931"
+  - id: 3
+    english: Inventory Full
+    chinese: "\u80CC\u5305\u5DF2\u6EE1"
+  - id: 4
+    english: Job Mismatching
+    chinese: "\u804C\u4E1A\u4E0D\u5339\u914D"
+  - id: 5
+    english: Coin Not Enough
+    chinese: "\u91D1\u5E01\u4E0D\u8DB3"
+  - id: 6
+    english: Diamond Not Enough
+    chinese: "\u94BB\u77F3\u4E0D\u8DB3"
+  - id: 7
+    english: Belief Not Enough
+    chinese: "\u4FE1\u4EF0\u4E0D\u8DB3"
+  - id: 8
+    english: Food Not Enough
+    chinese: "\u98DF\u7269\u4E0D\u8DB3"
+  - id: 9
+    english: Skill Point Not Enough
+    chinese: "\u6280\u80FD\u70B9\u6570\u4E0D\u8DB3"
+  - id: 10
+    english: Dependent Skill Level Not Enough
+    chinese: "\u4F9D\u8D56\u6280\u80FD\u7B49\u7EA7\u4E0D\u8DB3"
+  - id: 11
+    english: Attribute Not Enough
+    chinese: "\u5C5E\u6027\u4E0D\u8DB3"
+  - id: 12
+    english: Max Level
+    chinese: "\u5DF2\u7ECF\u4E3A\u6700\u9AD8\u7B49\u7EA7"
+  _localizationUnitData:
+  - id: 0
+    english: one
+    chinese: "\u4E00"
+  - id: 1
+    english: I'm unit one
+    chinese: "\u6211\u662F\u89D2\u8272\u4E00"
+  - id: 2
+    english: two
+    chinese: "\u4E8C"
+  - id: 3
+    english: I'm unit two
+    chinese: "\u6211\u662F\u89D2\u8272\u4E8C"
+  - id: 4
+    english: three
+    chinese: "\u4E09"
+  - id: 5
+    english: I'm unit three
+    chinese: "\u6211\u662F\u89D2\u8272\u4E09"
+  - id: 6
+    english: four
+    chinese: "\u56DB"
+  - id: 7
+    english: I'm unit four
+    chinese: "\u6211\u662F\u89D2\u8272\u56DB"
+  - id: 8
+    english: five
+    chinese: "\u4E94"
+  - id: 9
+    english: I'm unit five
+    chinese: "\u6211\u662F\u89D2\u8272\u4E94"
+  - id: 10
+    english: six
+    chinese: "\u516D"
+  - id: 11
+    english: I'm unit six
+    chinese: "\u6211\u662F\u89D2\u8272\u516D"
+  _localizationSkillData:
+  - id: 0
+    english: one
+    chinese: "\u4E00"
+  - id: 1
+    english: I'm skill one
+    chinese: "\u6211\u662F\u6280\u80FD\u4E00"
+  - id: 2
+    english: two
+    chinese: "\u4E8C"
+  - id: 3
+    english: I'm skill two
+    chinese: "\u6211\u662F\u6280\u80FD\u4E8C"
+  - id: 4
+    english: three
+    chinese: "\u4E09"
+  - id: 5
+    english: I'm skill three
+    chinese: "\u6211\u662F\u6280\u80FD\u4E09"
+  - id: 6
+    english: four
+    chinese: "\u56DB"
+  - id: 7
+    english: I'm skill four
+    chinese: "\u6211\u662F\u6280\u80FD\u56DB"
+  _localizationItemData:
+  - id: 0
+    english: one
+    chinese: "\u4E00"
+  - id: 1
+    english: I'm item one
+    chinese: "\u6211\u662F\u7269\u54C1\u4E00"
+  - id: 2
+    english: two
+    chinese: "\u4E8C"
+  - id: 3
+    english: I'm item two
+    chinese: "\u6211\u662F\u7269\u54C1\u4E8C"
+  - id: 4
+    english: three
+    chinese: "\u4E09"
+  - id: 5
+    english: I'm item three
+    chinese: "\u6211\u662F\u7269\u54C1\u4E09"
+  - id: 6
+    english: four
+    chinese: "\u56DB"
+  - id: 7
+    english: I'm item four
+    chinese: "\u6211\u662F\u7269\u54C1\u56DB"
+  _localizationAchiData:
+  - id: 0
+    english: Achi 1
+    chinese: "\u6210\u5C311"
+  - id: 1
+    english: Achi 2
+    chinese: "\u6210\u5C312"
+  - id: 2
+    english: Achi 3
+    chinese: "\u6210\u5C313"
+  - id: 3
+    english: Achi 4
+    chinese: "\u6210\u5C314"
+  - id: 4
+    english: Achi 5
+    chinese: "\u6210\u5C315"
+  - id: 5
+    english: Achi 6
+    chinese: "\u6210\u5C316"
+  - id: 6
+    english: Achi 7
+    chinese: "\u6210\u5C317"
+  - id: 7
+    english: Achi 8
+    chinese: "\u6210\u5C318"
+  - id: 8
+    english: Achi 9
+    chinese: "\u6210\u5C319"
+  - id: 9
+    english: Achi 10
+    chinese: "\u6210\u5C3110"
+  - id: 10
+    english: Achi 11
+    chinese: "\u6210\u5C3111"
+  - id: 11
+    english: Achi 12
+    chinese: "\u6210\u5C3112"
+  - id: 12
+    english: Achi 13
+    chinese: "\u6210\u5C3113"
+  - id: 13
+    english: Achi 14
+    chinese: "\u6210\u5C3114"
+  - id: 14
+    english: Achi 15
+    chinese: "\u6210\u5C3115"
+  - id: 15
+    english: Achi 16
+    chinese: "\u6210\u5C3116"
+  - id: 16
+    english: Achi 17
+    chinese: "\u6210\u5C3117"
+  - id: 17
+    english: Achi 18
+    chinese: "\u6210\u5C3118"
+  - id: 18
+    english: Achi 19
+    chinese: "\u6210\u5C3119"
+  - id: 19
+    english: Achi 20
+    chinese: "\u6210\u5C3120"
+  - id: 20
+    english: Achi 21
+    chinese: "\u6210\u5C3121"
+  - id: 21
+    english: Achi 22
+    chinese: "\u6210\u5C3122"
+  - id: 22
+    english: Achi 23
+    chinese: "\u6210\u5C3123"
+  - id: 23
+    english: Achi 24
+    chinese: "\u6210\u5C3124"
+  - id: 24
+    english: Achi 25
+    chinese: "\u6210\u5C3125"
+  - id: 25
+    english: Achi 26
+    chinese: "\u6210\u5C3126"
+  - id: 26
+    english: Achi 27
+    chinese: "\u6210\u5C3127"
+  - id: 27
+    english: Achi 28
+    chinese: "\u6210\u5C3128"
+  - id: 28
+    english: Achi 29
+    chinese: "\u6210\u5C3129"
+  - id: 29
+    english: Achi 30
+    chinese: "\u6210\u5C3130"
+  - id: 30
+    english: Achi 31
+    chinese: "\u6210\u5C3131"
+  - id: 31
+    english: Achi 32
+    chinese: "\u6210\u5C3132"
+  - id: 32
+    english: Achi 33
+    chinese: "\u6210\u5C3133"
+  - id: 33
+    english: Achi 34
+    chinese: "\u6210\u5C3134"
+  - id: 34
+    english: Achi 35
+    chinese: "\u6210\u5C3135"
+  - id: 35
+    english: Achi 36
+    chinese: "\u6210\u5C3136"
+  - id: 36
+    english: Achi 37
+    chinese: "\u6210\u5C3137"
+  - id: 37
+    english: Achi 38
+    chinese: "\u6210\u5C3138"
+  - id: 38
+    english: Achi 39
+    chinese: "\u6210\u5C3139"
+  - id: 39
+    english: Achi 40
+    chinese: "\u6210\u5C3140"
+  - id: 40
+    english: Achi 41
+    chinese: "\u6210\u5C3141"
+  - id: 41
+    english: Achi 42
+    chinese: "\u6210\u5C3142"
+  - id: 42
+    english: Achi 43
+    chinese: "\u6210\u5C3143"
+  - id: 43
+    english: Achi 44
+    chinese: "\u6210\u5C3144"
+  - id: 44
+    english: Achi 45
+    chinese: "\u6210\u5C3145"
+  - id: 45
+    english: Achi 46
+    chinese: "\u6210\u5C3146"
+  - id: 46
+    english: Achi 47
+    chinese: "\u6210\u5C3147"
+  - id: 47
+    english: Achi 48
+    chinese: "\u6210\u5C3148"
+  - id: 48
+    english: Achi 49
+    chinese: "\u6210\u5C3149"
+  - id: 49
+    english: Achi 50
+    chinese: "\u6210\u5C3150"
+  - id: 50
+    english: Achi 51
+    chinese: "\u6210\u5C3151"
+  - id: 51
+    english: Achi 52
+    chinese: "\u6210\u5C3152"
+  - id: 52
+    english: Achi 53
+    chinese: "\u6210\u5C3153"
+  - id: 53
+    english: Achi 54
+    chinese: "\u6210\u5C3154"
+  - id: 54
+    english: Achi 55
+    chinese: "\u6210\u5C3155"
+  - id: 55
+    english: Achi 56
+    chinese: "\u6210\u5C3156"
+  - id: 56
+    english: Achi 57
+    chinese: "\u6210\u5C3157"
+  - id: 57
+    english: Achi 58
+    chinese: "\u6210\u5C3158"
+  - id: 58
+    english: Achi 59
+    chinese: "\u6210\u5C3159"
+  - id: 59
+    english: Achi 60
+    chinese: "\u6210\u5C3160"
+  _localizationAchiDescData:
+  - id: 0
+    english: None
+    chinese: " \u65E0"
+  - id: 1
+    english: "The total number of enemy heroes which are repeled on the battlefield.\r"
+    chinese: "\u6218\u573A\u4E2D\u51FB\u9000\u654C\u65B9\u82F1\u96C4\u603B\u6570 {0}
+      / {1}."
+  - id: 2
+    english: The total number of enemy heroes which are injured on the battlefield.
+    chinese: "\u6218\u573A\u4E2D\u4F24\u9000\u82F1\u96C4\u603B\u6570 {0} / {1}."
+  - id: 3
+    english: The total number of cost coins in the game.
+    chinese: "\u6E38\u620F\u4E2D\u91D1\u5E01\u7D2F\u79EF\u652F\u51FA\u6570 {0} / {1}."
+  - id: 4
+    english: The total number of cost diamond in the game.
+    chinese: "\u6E38\u620F\u4E2D\u94BB\u77F3\u7D2F\u79EF\u652F\u51FA\u6570 {0} / {1}."
+  - id: 5
+    english: The total number of consum which are used in the game.
+    chinese: "\u6E38\u620F\u4E2D\u6D88\u8017\u54C1\u7D2F\u79EF\u4F7F\u7528\u6570 {0}
+      / {1}."
+  - id: 6
+    english: The total number of fighting in the game.
+    chinese: "\u6E38\u620F\u4E2D\u5F81\u6218\u7D2F\u79EF\u6B21\u6570 {0} / {1}."
+  - id: 7
+    english: The total number of skill upgrade in the game.
+    chinese: "\u6E38\u620F\u4E2D\u6280\u80FD\u5347\u7EA7\u7D2F\u79EF\u6B21\u6570 {0}
+      / {1}."
+  - id: 8
+    english: The total number of throw's item in the game.
+    chinese: "\u6E38\u620F\u4E2D\u7D2F\u79EF\u4E22\u5F03\u7269\u54C1\u6570 {0} / {1}."
+  - id: 9
+    english: The total number of win in the game.
+    chinese: "\u6E38\u620F\u4E2D\u7D2F\u79EF\u80DC\u5229\u6570 {0} / {1}."
+  - id: 10
+    english: The total number of defeated in the game.
+    chinese: "\u6E38\u620F\u4E2D\u7D2F\u79EF\u5931\u8D25\u6570 {0} / {1}."
+  _localizationTitleData:
+  - id: 0
+    english: Novice
+    chinese: "\u65B0\u4EBA"
+  - id: 1
+    english: Title 1
+    chinese: "\u79F0\u53F71"
+  - id: 2
+    english: Title 2
+    chinese: "\u79F0\u53F72"
+  - id: 3
+    english: Title 3
+    chinese: "\u79F0\u53F73"
+  - id: 4
+    english: Title 4
+    chinese: "\u79F0\u53F74"
+  - id: 5
+    english: Title 5
+    chinese: "\u79F0\u53F75"
+  - id: 6
+    english: Title 6
+    chinese: "\u79F0\u53F76"
+  - id: 7
+    english: Title 7
+    chinese: "\u79F0\u53F77"
+  - id: 8
+    english: Title 8
+    chinese: "\u79F0\u53F78"
+  - id: 9
+    english: Title 9
+    chinese: "\u79F0\u53F79"
+  - id: 10
+    english: Title 10
+    chinese: "\u79F0\u53F710"
+  - id: 11
+    english: Title 11
+    chinese: "\u79F0\u53F711"
+  - id: 12
+    english: Title 12
+    chinese: "\u79F0\u53F712"
+  - id: 13
+    english: Title 13
+    chinese: "\u79F0\u53F713"
+  - id: 14
+    english: Title 14
+    chinese: "\u79F0\u53F714"
+  - id: 15
+    english: Title 15
+    chinese: "\u79F0\u53F715"
+  - id: 16
+    english: Title 16
+    chinese: "\u79F0\u53F716"
+  - id: 17
+    english: Title 17
+    chinese: "\u79F0\u53F717"
+  - id: 18
+    english: Title 18
+    chinese: "\u79F0\u53F718"
+  - id: 19
+    english: Title 19
+    chinese: "\u79F0\u53F719"
+  - id: 20
+    english: Title 20
+    chinese: "\u79F0\u53F720"
+  - id: 21
+    english: Title 21
+    chinese: "\u79F0\u53F721"
+  - id: 22
+    english: Title 22
+    chinese: "\u79F0\u53F722"
+  - id: 23
+    english: Title 23
+    chinese: "\u79F0\u53F723"
+  - id: 24
+    english: Title 24
+    chinese: "\u79F0\u53F724"
+  - id: 25
+    english: Title 25
+    chinese: "\u79F0\u53F725"
+  - id: 26
+    english: Title 26
+    chinese: "\u79F0\u53F726"
+  - id: 27
+    english: Title 27
+    chinese: "\u79F0\u53F727"
+  - id: 28
+    english: Title 28
+    chinese: "\u79F0\u53F728"
+  - id: 29
+    english: Title 29
+    chinese: "\u79F0\u53F729"
+  - id: 30
+    english: Title 30
+    chinese: "\u79F0\u53F730"
+  - id: 31
+    english: Title 31
+    chinese: "\u79F0\u53F731"
+  - id: 32
+    english: Title 32
+    chinese: "\u79F0\u53F732"
+  - id: 33
+    english: Title 33
+    chinese: "\u79F0\u53F733"
+  - id: 34
+    english: Title 34
+    chinese: "\u79F0\u53F734"
+  - id: 35
+    english: Title 35
+    chinese: "\u79F0\u53F735"
+  - id: 36
+    english: Title 36
+    chinese: "\u79F0\u53F736"
+  - id: 37
+    english: Title 37
+    chinese: "\u79F0\u53F737"
+  - id: 38
+    english: Title 38
+    chinese: "\u79F0\u53F738"
+  - id: 39
+    english: Title 39
+    chinese: "\u79F0\u53F739"
+  - id: 40
+    english: Title 40
+    chinese: "\u79F0\u53F740"
+  - id: 41
+    english: Title 41
+    chinese: "\u79F0\u53F741"
+  - id: 42
+    english: Title 42
+    chinese: "\u79F0\u53F742"
+  - id: 43
+    english: Title 43
+    chinese: "\u79F0\u53F743"
+  - id: 44
+    english: Title 44
+    chinese: "\u79F0\u53F744"
+  - id: 45
+    english: Title 45
+    chinese: "\u79F0\u53F745"
+  - id: 46
+    english: Title 46
+    chinese: "\u79F0\u53F746"
+  - id: 47
+    english: Title 47
+    chinese: "\u79F0\u53F747"
+  - id: 48
+    english: Title 48
+    chinese: "\u79F0\u53F748"
+  - id: 49
+    english: Title 49
+    chinese: "\u79F0\u53F749"
+  - id: 50
+    english: Title 50
+    chinese: "\u79F0\u53F750"
+  - id: 51
+    english: Title 51
+    chinese: "\u79F0\u53F751"
+  - id: 52
+    english: Title 52
+    chinese: "\u79F0\u53F752"
+  - id: 53
+    english: Title 53
+    chinese: "\u79F0\u53F753"
+  - id: 54
+    english: Title 54
+    chinese: "\u79F0\u53F754"
+  - id: 55
+    english: Title 55
+    chinese: "\u79F0\u53F755"
+  - id: 56
+    english: Title 56
+    chinese: "\u79F0\u53F756"
+  - id: 57
+    english: Title 57
+    chinese: "\u79F0\u53F757"
+  - id: 58
+    english: Title 58
+    chinese: "\u79F0\u53F758"
+  - id: 59
+    english: Title 59
+    chinese: "\u79F0\u53F759"
+  - id: 60
+    english: Title 60
+    chinese: "\u79F0\u53F760"
+  _localizationTitleDescData:
+  - id: 0
+    english: None
+    chinese: "\u65E0 "
+  - id: 1
+    english: None
+    chinese: "\u65E0 "
+  - id: 2
+    english: None
+    chinese: "\u65E0 "
+  - id: 3
+    english: None
+    chinese: "\u65E0 "
+  - id: 4
+    english: None
+    chinese: "\u65E0 "
+  - id: 5
+    english: None
+    chinese: "\u65E0 "
+  - id: 6
+    english: None
+    chinese: "\u65E0 "
+  - id: 7
+    english: None
+    chinese: "\u65E0 "
+  - id: 8
+    english: None
+    chinese: "\u65E0 "
+  - id: 9
+    english: None
+    chinese: "\u65E0 "
+  - id: 10
+    english: None
+    chinese: "\u65E0 "
+  - id: 11
+    english: None
+    chinese: "\u65E0 "
+  - id: 12
+    english: None
+    chinese: "\u65E0 "
+  - id: 13
+    english: None
+    chinese: "\u65E0 "
+  - id: 14
+    english: None
+    chinese: "\u65E0 "
+  - id: 15
+    english: None
+    chinese: "\u65E0 "
+  - id: 16
+    english: None
+    chinese: "\u65E0 "
+  - id: 17
+    english: None
+    chinese: "\u65E0 "
+  - id: 18
+    english: None
+    chinese: "\u65E0 "
+  - id: 19
+    english: None
+    chinese: "\u65E0 "
+  - id: 20
+    english: None
+    chinese: "\u65E0 "
+  - id: 21
+    english: None
+    chinese: "\u65E0 "
+  - id: 22
+    english: None
+    chinese: "\u65E0 "
+  - id: 23
+    english: None
+    chinese: "\u65E0 "
+  - id: 24
+    english: None
+    chinese: "\u65E0 "
+  - id: 25
+    english: None
+    chinese: "\u65E0 "
+  - id: 26
+    english: None
+    chinese: "\u65E0 "
+  - id: 27
+    english: None
+    chinese: "\u65E0 "
+  - id: 28
+    english: None
+    chinese: "\u65E0 "
+  - id: 29
+    english: None
+    chinese: "\u65E0 "
+  - id: 30
+    english: None
+    chinese: "\u65E0 "
+  - id: 31
+    english: None
+    chinese: "\u65E0 "
+  - id: 32
+    english: None
+    chinese: "\u65E0 "
+  - id: 33
+    english: None
+    chinese: "\u65E0 "
+  - id: 34
+    english: None
+    chinese: "\u65E0 "
+  - id: 35
+    english: None
+    chinese: "\u65E0 "
+  - id: 36
+    english: None
+    chinese: "\u65E0 "
+  - id: 37
+    english: None
+    chinese: "\u65E0 "
+  - id: 38
+    english: None
+    chinese: "\u65E0 "
+  - id: 39
+    english: None
+    chinese: "\u65E0 "
+  - id: 40
+    english: None
+    chinese: "\u65E0 "
+  - id: 41
+    english: None
+    chinese: "\u65E0 "
+  - id: 42
+    english: None
+    chinese: "\u65E0 "
+  - id: 43
+    english: None
+    chinese: "\u65E0 "
+  - id: 44
+    english: None
+    chinese: "\u65E0 "
+  - id: 45
+    english: None
+    chinese: "\u65E0 "
+  - id: 46
+    english: None
+    chinese: "\u65E0 "
+  - id: 47
+    english: None
+    chinese: "\u65E0 "
+  - id: 48
+    english: None
+    chinese: "\u65E0 "
+  - id: 49
+    english: None
+    chinese: "\u65E0 "
+  - id: 50
+    english: None
+    chinese: "\u65E0 "
+  - id: 51
+    english: None
+    chinese: "\u65E0 "
+  - id: 52
+    english: None
+    chinese: "\u65E0 "
+  - id: 53
+    english: None
+    chinese: "\u65E0 "
+  - id: 54
+    english: None
+    chinese: "\u65E0 "
+  - id: 55
+    english: None
+    chinese: "\u65E0 "
+  - id: 56
+    english: None
+    chinese: "\u65E0 "
+  - id: 57
+    english: None
+    chinese: "\u65E0 "
+  - id: 58
+    english: None
+    chinese: "\u65E0 "
+  - id: 59
+    english: None
+    chinese: "\u65E0 "
+  - id: 60
+    english: None
+    chinese: "\u65E0 "
+  _terrainData:
+  - id: 0
+    speed: 0.8
+    cost: 80
+  - id: 1
+    speed: 1.2
+    cost: 70
+  - id: 2
+    speed: 0.4
+    cost: 130
+  _enemyData:
+  - id: 0
+    unit: 0
+    skills: 010000000200000003000000
+    equips: 0000000000000000000000000000000000000000000000000000000000000000
+  - id: 1
+    unit: 1
+    skills: 0100000002000000
+    equips: 0000000000000000000000000000000000000000000000000000000000000000
+  - id: 2
+    unit: 2
+    skills: 010000000200000003000000
+    equips: 0000000000000000000000000000000000000000000000000000000000000000
+  _enemyConfigData:
+  - id: 0
+    units: 000000000100000002000000
