@@ -1038,6 +1038,35 @@ namespace GKBase
 			}
 			return lineCount;
 		}
+
+        // 计算折线节点.\
+        protected static List<Vector2> points = new List<Vector2>();
+        public static List<Vector2> ClacLinePoint(Vector2 src, Vector2 dest, out bool vertical)
+        {
+            points.Clear();
+            vertical = true;
+
+            float distanceX = Mathf.Abs(src.x - dest.x);
+            float distanceY = Mathf.Abs(src.y - dest.y);
+
+            // 2 points.
+            //if (distanceX < 8 || distanceY < 8)
+            //{
+            //    vertical = distanceX < distanceY;
+            //    points.Add(src);
+            //    points.Add(dest);
+            //    return points;
+            //}
+
+            // 4 points.
+            points.Add(src);
+            Vector2 point = new Vector2(src.x + 6, src.y);
+            points.Add(point);
+            point = new Vector2(src.x + 6, dest.y);
+            points.Add(point);
+            points.Add(dest);
+            return points;
+        }
 	}
 }
 

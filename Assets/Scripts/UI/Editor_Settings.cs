@@ -32,9 +32,11 @@ public class Editor_Settings : ScriptableObject
         // Action 最小高度.
         public int _nodeMinHeight = 30;
         // 内容背景色.
-        public Color _bgColor = new Color(0.6f, 0.6f, 0.6f);
-        // 行为节点背景色.
-        public Color _actionColor = new Color(0.6f, 0.6f, 0.6f);
+        public Color _bgColor = new Color(0.9f, 0.9f, 0.9f);
+		// 内容前景色.
+		public Color _fgColor = new Color(0.6f, 0.6f, 0.6f);
+		// 行为节点背景色.
+		public Color _actionColor = new Color(0.6f, 0.6f, 0.6f);
         // 条件节点背景色.
         public Color _conditionColor = new Color(0.6f, 0.6f, 0.6f);
         // 最小缩放因子.
@@ -45,6 +47,7 @@ public class Editor_Settings : ScriptableObject
         public GUIStyle _titleStyle;
         public GUIStyle _nodeStyle;
         public GUIStyle _commentStyle;
+		public GUIStyle _contentStyle;
 		[HideInInspector]
 		public float _commentContentMargin;
 		// 连接点击范围扩展.

@@ -11,10 +11,6 @@
         #endregion
 
         #region PublicMethod
-        //public void DrawNode(float Scale, bool drag, ref bool links, ref GKToyNode selected)
-        //{
-        //    base.DrawNode(Scale, drag, ref links, ref selected);
-        //}
         #endregion
 
         #region PrivateMethod
