@@ -27,15 +27,10 @@ public class Editor_Settings : ScriptableObject
         public int _charWidth = 12;
         // 字符高度.
         public int _charHeight = 16;
-        // Comment 字符宽度.
-        public int _commentCharWidth = 8;
-        // Comment 字符高度.
-        public int _commentCharHeight = 13;
         // Action 最小宽度.
         public int _nodeMinWidth = 80;
         // Action 最小高度.
         public int _nodeMinHeight = 30;
-        public int linkClickOffset = 3;
         // 内容背景色.
         public Color _bgColor = new Color(0.6f, 0.6f, 0.6f);
         // 行为节点背景色.
@@ -50,8 +45,12 @@ public class Editor_Settings : ScriptableObject
         public GUIStyle _titleStyle;
         public GUIStyle _nodeStyle;
         public GUIStyle _commentStyle;
-        // 图标.
-        public Texture[] _icons;
+		[HideInInspector]
+		public float _commentContentMargin;
+		// 连接点击范围扩展.
+		public float linkClickOffset = 3;
+		// 图标.
+		public Texture[] _icons;
     }
     public  ToyMakerBase toyMakerBase = new ToyMakerBase();
 }

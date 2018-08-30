@@ -992,8 +992,53 @@ namespace GKBase
         public static void CrossFadeColorInChildren(GameObject root, float alpha, float duration, bool ignoreTimeScale)
         {
         }
-
-    }
+		// 不能处于行首的符号.
+		private static List<char> nonconvertibleWord = new List<char> { '，', '。', '“', '”', '…', '！', '？', '、', ',', '.', '"' };
+		// 所使用字体英文字母占中文文字的宽度比例
+		private const float letterPercent = 0.65f;
+		/// <summary>
+		/// 中文文字自动换行，含中英混排、符号处理
+		/// </summary>
+		/// <param name="word">要处理的文字</param>
+		/// <param name="lineLength">一行的字数</param>
+		/// <returns>处理后的行数</returns>
+		public static int AutoLineFeed(string word, out string afterWord, int lineLength)
+		{
+			afterWord = word;
+			int index = 0;
+			int lineCount = 0;
+			int breakCount = 0;
+			float curLineWord = 0;
+			while (index < word.Length)
+			{
+				if (word[index] == '\n')
+				{
+					++lineCount;
+					++breakCount;
+					curLineWord = 0;
+				}
+				else
+				{
+					curLineWord += (int)word[index] > 255 ? 1 : letterPercent;
+					if (curLineWord > lineLength - 1 && index + 1 < word.Length)
+					{
+						if (nonconvertibleWord.IndexOf(word[index + 1]) >= 0)
+						{
+							--index;
+						}
+						if (word[index + 1] != '\n')
+						{
+							afterWord = afterWord.Insert(index + lineCount - breakCount + 1, "\n");
+							++lineCount;
+							curLineWord = 0;
+						}
+					}
+				}
+				++index;
+			}
+			return lineCount;
+		}
+	}
 }
 
 

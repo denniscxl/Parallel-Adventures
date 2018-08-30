@@ -192,9 +192,10 @@ namespace GKToy
             if (!string.IsNullOrEmpty(comment))
             {
                 _tmpRect.y = _tmpRect.y + _tmpRect.height;
-                int lines = (comment.Length * settings._commentCharWidth - 4) / (int)_tmpRect.width;
-                _tmpRect.height = (lines + 1) * settings._commentCharHeight + 6;
-                GUI.Box(_tmpRect, comment, settings._commentStyle);
+				string commentWord;
+				int lines = GK.AutoLineFeed(comment, out commentWord, (int)((_tmpRect.width - settings._commentContentMargin) / settings._commentStyle.fontSize));
+				_tmpRect.height = (lines + 1) * settings._commentStyle.lineHeight + 6;
+				GUI.Box(_tmpRect, commentWord, settings._commentStyle);
             }
 
             // 绘制图标.
@@ -217,7 +218,7 @@ namespace GKToy
 
             GUILayout.Label("Comment", GUILayout.Height(GKToyMakerBase.toyMakerBase._lineHeight));
             comment = GUILayout.TextArea(comment, GUILayout.Height(GKToyMakerBase.toyMakerBase._lineHeight * 5));
-			
+
             if (0 != links.Count)
             {
 				GKEditor.DrawInspectorSeperator();

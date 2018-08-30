@@ -92,6 +92,8 @@ namespace GKToy
 
         // Node链表.
         protected Dictionary<int, GKToyNode> _nodeLst = new Dictionary<int, GKToyNode>();
+        // 临时节点缓存.
+        protected GKToyNode _tmpSelectNode = null;
         protected GKToyNode _selectNode = null;
 
         // 当前Node索引. 用于产生GUID.
@@ -100,7 +102,7 @@ namespace GKToy
 		// 当前Link索引，用于产生Link的GUID.
 		protected int _curLinkIdx = 0;
 		// 当前选中Link的Id.
-		protected Link _selectLink = null;
+		protected static Link _selectLink = null;
         // 视口区域.
         protected static Rect _contentView;
         protected Rect _contentRect = new Rect();
@@ -133,6 +135,7 @@ namespace GKToy
                 _removeLinkLst[id] = new List<GKToyNode>();
 
             _removeLinkLst[id].Add(node);
+            _selectLink = null;
         }
 
 		public static void DrawLine(Vector2 src, Vector2 dest)
@@ -215,24 +218,36 @@ namespace GKToy
         // 初始化数据必须需要再Enable中执行.
         private static void Init()
         {
+            // 数据重置.
+            _selectLink = null;
+
             // 数据备份.
             _lastColor = GUI.color; ;
             _lastBgColor = GUI.backgroundColor;
 
-            // 数据导入.
-            toyMakerBase = Settings.toyMakerBase;
+			// 数据导入.
+			toyMakerBase = Settings.toyMakerBase;
+			toyMakerBase._commentContentMargin = toyMakerBase._commentStyle.padding.left + toyMakerBase._commentStyle.padding.right
+												+ toyMakerBase._commentStyle.margin.left + toyMakerBase._commentStyle.margin.right 
+												+ toyMakerBase._commentStyle.contentOffset.x;
 
-            // 数据计算.
-            _contentView = new Rect(toyMakerBase._informationWidth + toyMakerBase._layoutSpace * 3,
+			// 数据计算.
+			_contentView = new Rect(toyMakerBase._informationWidth + toyMakerBase._layoutSpace * 3,
                                     toyMakerBase._lineHeight + toyMakerBase._layoutSpace,
                                     toyMakerBase._minWidth - toyMakerBase._informationWidth - toyMakerBase._layoutSpace * 4,
                                     toyMakerBase._minHeight - toyMakerBase._lineHeight - toyMakerBase._layoutSpace * 3);
         }
 
+        private void Update()
+        {
+            Changed();
+            UpdateLinks();
+        }
+
         private void OnGUI()
         {
             Logic();
-			Render();
+            Render();
 		}
 
 		private void Render()
@@ -302,15 +317,12 @@ namespace GKToy
                         _selectNode.isMove = false;
 					break;
             }
-
-            UpdateLinks();
-			LinkChanged();
 		}
 
 		#region Logic
         private void UpdateTouch()
         {
-            if (!UpdateNodeTouch())
+            if (UpdateNodeTouch())
                 return;
             UpdateLinkTouch();
         }
@@ -347,8 +359,8 @@ namespace GKToy
 						if (lineRect.Contains(Event.current.mousePosition))
 						{
 							_selectLink = link;
-							_selectNode = node.Value;
-							_clickedElement = GKToyMakerBase.ClickedElement.LinkElement;
+                            _tmpSelectNode = node.Value;
+							_clickedElement = ClickedElement.LinkElement;
 							// 如果是选中的连接，则跳过最后再画，否则高亮色会被遮住.
 							return true;
 						}
@@ -371,20 +383,20 @@ namespace GKToy
             {
                 if (node.inputRect.Contains(mousePos))
                 {
-                    _selectNode = node;
+                    _tmpSelectNode = node;
                     return true;
                 }
                 else if (node.outputRect.Contains(mousePos))
                 {
                     _isLinking = true;
-                    _selectNode = node;
+                    _tmpSelectNode = node;
                     return true;
                 }
                 else if (node.rect.Contains(mousePos))
                 {
                     _clickedElement = ClickedElement.NodeElement;
-                    _selectNode = node;
-                    _selectNode.isMove = true;
+                    _tmpSelectNode = node;
+                    _tmpSelectNode.isMove = true;
                     _selectLink = null;
 					_mouseOffset = mousePos - node.rect.position;
 					return true;
@@ -396,7 +408,7 @@ namespace GKToy
         // 拖拽、缩放过程中更新链接线段.
         private void UpdateLinks()
         {
-            if (_isDrag && !_isLinking)
+            if (_isDrag && !_isLinking && null != _selectNode)
             {
                 _selectNode.UpdateAllLinks();
                 foreach (GKToyNode node in _nodeLst.Values)
@@ -693,8 +705,8 @@ namespace GKToy
             }
         }
 
-        // 绑定新链接.
-        protected void LinkChanged()
+        // 缓存数据赋值..
+        protected void Changed()
         {
             if (0 != _newLinkLst.Count)
             {
@@ -719,6 +731,12 @@ namespace GKToy
                     }
                 }
                 _removeLinkLst.Clear();
+            }
+
+            if(null != _tmpSelectNode)
+            {
+                _selectNode = _tmpSelectNode;
+                _tmpSelectNode = null;
             }
         }
         #endregion
@@ -768,7 +786,7 @@ namespace GKToy
         // 增加节点.
         virtual protected void CreateNode(GKToyNode node)
         {
-            _selectNode = node;
+            _tmpSelectNode = node;
             node.iconIdx = 0;
             node.name = string.Format("{0}-{1}", node.type, node.id);
             node.comment = "";
@@ -789,6 +807,7 @@ namespace GKToy
         {
             _nodeLst.Clear();
             _selectNode = null;
+            _selectLink = null;
         }
         #endregion
 
