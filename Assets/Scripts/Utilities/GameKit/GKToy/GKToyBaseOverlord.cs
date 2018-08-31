@@ -4,9 +4,9 @@ using GKBase;
 
 namespace GKToy
 {
+    [System.Serializable]
     public class GKToyBaseOverlord : MonoBehaviour
     {
-
         #region PublicField
         protected static Editor_Settings _settings;
         public static Editor_Settings Settings
@@ -21,10 +21,9 @@ namespace GKToy
             }
         }
         public static Editor_Settings.ToyMakerBase toyMakerBase = null;
-
+        public ToyData data = new ToyData();
         public List<GKToyShardVariable<object>> variableLst = new List<GKToyShardVariable<object>>();
-        // Node链表.
-        //protected Dictionary<int, GKToyNode> _nodeLst = new Dictionary<int, GKToyNode>();
+
         #endregion
 
         #region PrivateField
@@ -47,6 +46,11 @@ namespace GKToy
         {
 
         }
+
+        protected void Init()
+        {
+            
+        }
         #endregion
     }
 
@@ -61,5 +65,27 @@ namespace GKToy
         Node = 0,
         Action,
         Condition,
+    }
+
+    [System.Serializable]
+    public class ToyData
+    {
+        public ModuleType moduleType = ModuleType.Base;
+        public string name = "Hello";
+        public string comment = "";
+        // Node链表.
+        //public Dictionary<int, GKToyNode> nodeLst = new Dictionary<int, GKToyNode>();
+        public List<GKToyNode> nodeLst = new List<GKToyNode>();
+
+        // 通过ID查找节点.
+        public GKToyNode GetNodeByID(int id)
+        {
+            foreach(var n in nodeLst)
+            {
+                if (n.id == id)
+                    return n;
+            }
+            return null;
+        }
     }
 }
