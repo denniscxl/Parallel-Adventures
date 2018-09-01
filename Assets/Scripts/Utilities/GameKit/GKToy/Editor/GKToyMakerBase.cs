@@ -584,7 +584,7 @@ namespace GKToy
         // 渲染链接线段.
         private void DrawLinks()
         {
-            if (null == Event.current || null == _selectNode)
+            if (null == Event.current)
                 return;
 
             Handles.color = Color.black;
