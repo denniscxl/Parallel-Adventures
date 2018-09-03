@@ -53,8 +53,32 @@ namespace GKToy
         }
         // 当前Node索引. 用于产生GUID.
         protected int _curNodeIdx = 0;
+        protected int curNodeIdx
+        {
+            get { return _curNodeIdx; }
+            set 
+            {
+                if(null != _overlord)
+                {
+                    _overlord.data.nodeGuid = value;
+                }
+                _curNodeIdx = value;
+            }
+        }
         // 当前Link索引，用于产生Link的GUID.
         protected int _curLinkIdx = 0;
+        protected int curLinkIdx
+        {
+            get { return _curLinkIdx; }
+            set
+            {
+                if (null != _overlord)
+                {
+                    _overlord.data.linkGuid = value;
+                }
+                _curLinkIdx = value;
+            }
+        }
         // 事件内容滚动条位置.
         protected Vector2 _contentScrollPos = new Vector2(0f, 0f);
         // 鼠标是否拖拽中.
@@ -496,7 +520,7 @@ namespace GKToy
                     {
                         GKToyNode n = _overlord.data.GetNodeByID(link.Key);
                         if(null != n)
-                            n.AddLink(_curLinkIdx++, l);
+                            n.AddLink(curLinkIdx++, l);
                     }
 
                 }
@@ -569,7 +593,7 @@ namespace GKToy
             if (GUILayout.Button("Create", GUILayout.Height(toyMakerBase._lineHeight)))
             {
                 GKToyNode node = new GKToyNode();
-                node.id = _curNodeIdx++;
+                node.id = curNodeIdx++;
                 node.pos.x = (_contentScrollPos.x + toyMakerBase._minWidth * 0.5f) / Scale;
                 node.pos.y = (_contentScrollPos.y + toyMakerBase._minHeight * 0.5f) / Scale;
                 CreateNode(node);
@@ -864,7 +888,7 @@ namespace GKToy
         protected void HandleMenuAddAction(object userData)
         {
             GKToyNode node = new GKToyNode();
-            node.id = _curNodeIdx++;
+            node.id = curNodeIdx++;
             node.nodeType = NodeType.Action;
             node.iconIdx = 0;
             node.pos.x = (((Vector2)userData).x) / Scale;
@@ -875,7 +899,7 @@ namespace GKToy
         protected void HandleMenuAddCondition(object userData)
         {
             GKToyNode node = new GKToyNode();
-            node.id = _curNodeIdx++;
+            node.id = curNodeIdx++;
             node.nodeType = NodeType.Condition;
             node.iconIdx = 0;
             node.pos.x = (((Vector2)userData).x) / Scale;
@@ -990,6 +1014,11 @@ namespace GKToy
             _selectLink = null;
             Scale = 1;
             _contentScrollPos = Vector2.zero;
+            if(null != _overlord)
+            {
+                curNodeIdx = _overlord.data.nodeGuid;
+                curLinkIdx = _overlord.data.linkGuid;
+            }
         }
 
         // 创建实例.

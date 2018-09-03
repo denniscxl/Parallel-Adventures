@@ -73,6 +73,8 @@ namespace GKToy
         public ModuleType moduleType = ModuleType.Base;
         public string name = "Hello";
         public string comment = "";
+        public int nodeGuid = 0;
+        public int linkGuid = 0;
         // Node链表.
         //public Dictionary<int, GKToyNode> nodeLst = new Dictionary<int, GKToyNode>();
         public List<GKToyNode> nodeLst = new List<GKToyNode>();
