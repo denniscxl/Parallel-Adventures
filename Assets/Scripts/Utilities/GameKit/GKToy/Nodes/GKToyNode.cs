@@ -11,12 +11,13 @@ namespace GKToy
     {
         #region PublicField
         public int id;
-        public int iconIdx;
+        public Texture icon;
         public NodeType nodeType = NodeType.Node;
         public Vector2 pos;
         public int width;
         public int height;
         public ModuleType type;
+		public string className;
         public string name;
         public string comment;
         public Rect rect;

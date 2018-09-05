@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 using GKBase;
+using System;
 
 /**
  * 游戏模块编辑器基类.
@@ -111,6 +112,10 @@ namespace GKToy
         // GUI 数据备份.
         protected Color _lastColor;
         protected Color _lastBgColor;
+		// 节点种类管理实例.
+		private static GKToyMakerTypeManager typeManager;
+		// 节点种类树根节点.
+		private static TreeNode root = null;
 		#endregion
 
 		#region PublicMethod
@@ -590,23 +595,60 @@ namespace GKToy
         // 绘制节点列表.
         virtual protected void DrawTasks()
         {
-            if (GUILayout.Button("Create", GUILayout.Height(toyMakerBase._lineHeight)))
-            {
-                GKToyNode node = new GKToyNode();
-                node.id = curNodeIdx++;
-                node.pos.x = (_contentScrollPos.x + toyMakerBase._minWidth * 0.5f) / Scale;
-                node.pos.y = (_contentScrollPos.y + toyMakerBase._minHeight * 0.5f) / Scale;
-                CreateNode(node);
-            }
+			if (root != null)
+			{
+				GUILayout.BeginVertical();
+				DrawTypeTree(root, 0, 0);
+				GUILayout.EndVertical();
+			}
         }
-        #endregion
+		private void DrawTypeTree(TreeNode node, int level, int treeIndex)
+		{
+			if (node == null)
+			{
+				return;
+			}
+			if (level != 0)
+			{
+				treeIndex++;
+				if (node.nodeType == TreeNode.TreeNodeType.Switch)
+				{
+					EditorGUILayout.BeginHorizontal();
+					GUILayout.Space(10 * (level - 1));
+					node.isOpen = EditorGUILayout.Foldout(node.isOpen, node.name, true);
+					EditorGUILayout.EndHorizontal();
+				}
+				else
+				{
+					if (GUILayout.Button(node.name))
+					{
+						Type t = typeof(GKToyNode);
+						GKToyNode newNode = (GKToyNode)t.Assembly.CreateInstance("GKToy." + node.key);
+						newNode.className = node.key;
+						newNode.pos.x = (_contentScrollPos.x + toyMakerBase._minWidth * 0.5f) / Scale;
+						newNode.pos.y = (_contentScrollPos.y + toyMakerBase._minHeight * 0.5f) / Scale;
+						CreateNode(newNode);
+						//Debug.Log("GKToy."+node.key);
+					}
+				}
+			}
+			if (node == null || !node.isOpen || node.children == null)
+			{
+				return;
+			}
+			for (int i = 0; i < node.children.Count; i++)
+			{
+				DrawTypeTree(node.children[i], level + 1, treeIndex);
+			}
+		}
+		#endregion
 
-        #region Content
+		#region Content
 
-        //------------------------------ Link ------------------------------
+		//------------------------------ Link ------------------------------
 
-        // 渲染链接线段.
-        private void DrawLinks()
+		// 渲染链接线段.
+		private void DrawLinks()
         {
             if (null == Event.current)
                 return;
@@ -719,7 +761,10 @@ namespace GKToy
                 case NodeType.Condition:
                     GUI.backgroundColor = toyMakerBase._conditionColor;
                     break;
-                default:
+				case NodeType.Decoration:
+					GUI.backgroundColor = toyMakerBase._decorationColor;
+					break;
+				default:
                     GUI.backgroundColor = Color.red;
                     break;
             }
@@ -782,7 +827,7 @@ namespace GKToy
             _tmpRect.y = node.pos.y * Scale + 4;
             _tmpRect.width = tmpSize;
             _tmpRect.height = tmpSize;
-            GUI.DrawTexture(_tmpRect, toyMakerBase._icons[node.iconIdx]);
+            GUI.DrawTexture(_tmpRect, node.icon);
         }
 
         //------------------------------ Inspector ------------------------------
@@ -854,11 +899,11 @@ namespace GKToy
             }
             GUILayout.EndHorizontal();
         }
-        #endregion
+		#endregion
 
-        #region ContentMenu
-        //判断鼠标右键事件.
-        protected void DrawMenu(Rect rect)
+		#region ContentMenu
+		//判断鼠标右键事件.
+		protected void DrawMenu(Rect rect)
         {
             if (Event.current.type == EventType.ContextClick && rect.Contains(Event.current.mousePosition))
             {
@@ -867,12 +912,13 @@ namespace GKToy
                 switch (_clickedElement)
                 {
                     case ClickedElement.NoElement:
-                        menu.AddItem(new GUIContent("Add Action"), false, HandleMenuAddAction, Event.current.mousePosition);
-                        menu.AddSeparator("");
-                        menu.AddItem(new GUIContent("Add Condition"), false, HandleMenuAddCondition, Event.current.mousePosition);
-                        menu.AddSeparator("");
-                        menu.AddItem(new GUIContent("Reset"), false, HandleMenuReset, Event.current.mousePosition);
-                        break;
+						foreach (var item in typeManager.typeAttributeDict)
+						{
+							menu.AddItem(new GUIContent(item.Value.treePath), false, HandleMenuAddNode, new object[]{ Event.current.mousePosition, item.Key });
+						}
+						menu.AddSeparator("");
+						menu.AddItem(new GUIContent("Reset"), false, HandleMenuReset, Event.current.mousePosition);
+						break;
                     case ClickedElement.NodeElement:
                         break;
                     case ClickedElement.LinkElement:
@@ -885,25 +931,15 @@ namespace GKToy
             }
         }
 
-        protected void HandleMenuAddAction(object userData)
+		protected void HandleMenuAddNode(object userData)
         {
-            GKToyNode node = new GKToyNode();
-            node.id = curNodeIdx++;
-            node.nodeType = NodeType.Action;
-            node.iconIdx = 0;
-            node.pos.x = (((Vector2)userData).x) / Scale;
-            node.pos.y = (((Vector2)userData).y) / Scale;
-            CreateNode(node);
-        }
-
-        protected void HandleMenuAddCondition(object userData)
-        {
-            GKToyNode node = new GKToyNode();
-            node.id = curNodeIdx++;
-            node.nodeType = NodeType.Condition;
-            node.iconIdx = 0;
-            node.pos.x = (((Vector2)userData).x) / Scale;
-            node.pos.y = (((Vector2)userData).y) / Scale;
+			Vector2 mousePos = (Vector2)((object[])userData)[0];
+			string key = (string)((object[])userData)[1];
+			Type t = typeof(GKToyNode);
+			GKToyNode node = (GKToyNode)t.Assembly.CreateInstance("GKToy." + key);
+			node.className = key;
+            node.pos.x = (mousePos.x) / Scale;
+            node.pos.y = (mousePos.y) / Scale;
             CreateNode(node);
         }
 
@@ -921,8 +957,47 @@ namespace GKToy
         protected void CreateNode(GKToyNode node)
         {
             _tmpSelectNode = node;
-            node.iconIdx = 0;
-            node.name = string.Format("{0}-{1}", node.type, node.id);
+			node.id = curNodeIdx++;
+			string[] paths = typeManager.typeAttributeDict[node.className].treePath.Split('/');
+			string iconPath = typeManager.typeAttributeDict[node.className].iconPath;
+			if (paths.Length > 0)
+			{
+				switch (paths[0])
+				{
+					case "Action":
+						node.nodeType = NodeType.Action;
+						if (iconPath != "")
+							node.icon = GK.LoadTextureFromFile(32, iconPath);
+						else
+							node.icon = toyMakerBase._actionIcon;
+						break;
+					case "Condition":
+						node.nodeType = NodeType.Condition;
+						if (iconPath != "")
+							node.icon = GK.LoadTextureFromFile(32, iconPath);
+						else
+							node.icon = toyMakerBase._conditionIcon;
+						break;
+					case "Decoration":
+						node.nodeType = NodeType.Decoration;
+						if (iconPath != "")
+							node.icon = GK.LoadTextureFromFile(32, iconPath);
+						else
+							node.icon = toyMakerBase._decorationIcon;
+						break;
+					default:
+						if (iconPath != "")
+							node.icon = GK.LoadTextureFromFile(32, iconPath);
+						else
+							node.icon = toyMakerBase._defaultIcon;
+						break;
+				}
+				node.name = string.Format("{0}-{1}", paths[paths.Length - 1], node.id);
+			}
+			else
+			{
+				Debug.LogError("Incorrect node path:" + node.className);
+			}
             node.comment = "";
             _overlord.data.nodeLst.Add(node);
         }
@@ -987,7 +1062,11 @@ namespace GKToy
                                     toyMakerBase._minHeight - toyMakerBase._lineHeight - toyMakerBase._layoutSpace * 3);
             
             _nonContentRect = new Rect((toyMakerBase._minWidth - 206) * 0.5f, (toyMakerBase._minHeight - 100) * 0.5f, 206, 100);
-        }
+
+			// 子类树生成.
+			typeManager = new GKToyMakerTypeManager(typeof(GKToyNode));
+			root = TreeNode.Get().GenerateFileTree(typeManager.typeAttributeDict);
+		}
 
         // 序列化点选对象变更.
         protected void SelectChanged()
@@ -1035,7 +1114,7 @@ namespace GKToy
             Detail = 0,
             Actions,
             Variables,
-            Inspector
+            Inspector,
         }
 
 		public enum ClickedElement

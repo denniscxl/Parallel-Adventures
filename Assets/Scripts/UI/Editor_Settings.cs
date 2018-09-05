@@ -39,8 +39,10 @@ public class Editor_Settings : ScriptableObject
 		public Color _actionColor = new Color(0.6f, 0.6f, 0.6f);
         // 条件节点背景色.
         public Color _conditionColor = new Color(0.6f, 0.6f, 0.6f);
-        // 最小缩放因子.
-        public float _minScale = 1f;
+		// 装饰节点背景色.
+		public Color _decorationColor = new Color(0.6f, 0.6f, 0.6f);
+		// 最小缩放因子.
+		public float _minScale = 1f;
         // 最大缩放因子.
         public float _maxScale = 2;
         // 样式.
@@ -53,7 +55,10 @@ public class Editor_Settings : ScriptableObject
 		// 连接点击范围扩展.
 		public float linkClickOffset = 3;
 		// 图标.
-		public Texture[] _icons;
+		public Texture _defaultIcon;
+		public Texture _actionIcon;
+		public Texture _conditionIcon;
+		public Texture _decorationIcon;
     }
     public  ToyMakerBase toyMakerBase = new ToyMakerBase();
 }

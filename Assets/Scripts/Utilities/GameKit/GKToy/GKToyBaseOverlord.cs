@@ -65,6 +65,7 @@ namespace GKToy
         Node = 0,
         Action,
         Condition,
+		Decoration
     }
 
     [System.Serializable]
