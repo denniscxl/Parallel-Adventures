@@ -29,6 +29,8 @@ namespace GKToy
         }
         public Editor_Settings.ToyMakerBase toyMakerBase = null;
         protected GKToyBaseOverlord _overlord;
+        protected List<Type> _variableType = new List<Type>();
+        protected string [] _variableTypeNames;
         #endregion
 
         #region PrivateField
@@ -116,6 +118,11 @@ namespace GKToy
 		private static GKToyMakerTypeManager typeManager;
 		// 节点种类树根节点.
 		private static TreeNode root = null;
+        // 临时变量编辑缓存.
+        protected string _newVariableName = "";
+        protected int _newVariableIdx = 0;
+        protected Dictionary<string, List<object>> _addVariableLst = new Dictionary<string, List<object>>();
+        protected Dictionary<string, List<object>> _delVariableLst = new Dictionary<string, List<object>>();
 		#endregion
 
 		#region PublicMethod
@@ -388,6 +395,7 @@ namespace GKToy
                     DrawTasks();
                     break;
                 case InformationType.Variables:
+                    DrawVariables();
                     break;
                 case InformationType.Inspector:
                     DrawInspector();
@@ -517,6 +525,49 @@ namespace GKToy
         // 缓存数据赋值..
         protected void Changed()
         {
+            // 变量数据更新.
+            if (0 != _addVariableLst.Count)
+            {
+                _overlord.data.varuableChanged = true;
+                foreach (var v in _addVariableLst)
+                {
+                    foreach(var obj in v.Value)
+                    {
+                        if (_overlord.data.variableLst.ContainsKey(v.Key))
+                        {
+                            _overlord.data.variableLst[v.Key].Add(obj);
+                        }
+                        else
+                        {
+                            List<object> lst = new List<object>();
+                            lst.Add(obj);
+                            _overlord.data.variableLst.Add(v.Key, lst);
+                        }
+                    }
+                }
+                _addVariableLst.Clear();
+            }
+
+            if (0 != _delVariableLst.Count)
+            {
+                _overlord.data.varuableChanged = true;
+                foreach (var v in _delVariableLst)
+                {
+                    foreach (var obj in v.Value)
+                    {
+                        _overlord.data.RemoveVariable(v.Key, obj);
+                    }
+                }
+                _delVariableLst.Clear();
+            }
+
+            if(_overlord.data.varuableChanged)
+            {
+                _overlord.data.varuableChanged = false;
+                _overlord.data.SaveVariable();
+            }
+
+            // 链接数据更新.
             if (0 != _newLinkLst.Count)
             {
                 foreach (var link in _newLinkLst)
@@ -546,6 +597,7 @@ namespace GKToy
                 _removeLinkLst.Clear();
             }
 
+            // 节点选择数据更新.
             if (null != _tmpSelectNode)
             {
                 _selectNode = _tmpSelectNode;
@@ -641,14 +693,130 @@ namespace GKToy
 				DrawTypeTree(node.children[i], level + 1, treeIndex);
 			}
 		}
-		#endregion
+        #endregion
 
-		#region Content
+        #region Variables
+        // 绘制节点列表.
+        virtual protected void DrawVariables()
+        {
+            if (null == _variableTypeNames)
+                return;
 
-		//------------------------------ Link ------------------------------
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Label("Name", GUILayout.Width(40));
+                _newVariableName = GUILayout.TextField(_newVariableName, 12);
+            }
+            GUILayout.EndHorizontal();
 
-		// 渲染链接线段.
-		private void DrawLinks()
+            GUILayout.BeginHorizontal();
+            {
+                GUILayout.Label("Type", GUILayout.Width(40));
+                _newVariableIdx = EditorGUILayout.Popup(_newVariableIdx, _variableTypeNames);
+                if(GUILayout.Button("Add", GUILayout.Width(40), GUILayout.Height(14)))
+                {
+                    if (string.IsNullOrEmpty(_newVariableName))
+                    {
+                        EditorUtility.DisplayDialog("Tip", "Variables can not be empty.", "OK");
+                    }
+                    else if(!IsExistVariable(_newVariableName))
+                    {
+                        string strType = "GKToy." + _variableTypeNames[_newVariableIdx];
+                        Type t = typeof(GKToyVariable);
+                        GKToyVariable v = (GKToyVariable)t.Assembly.CreateInstance(strType);
+                        v.Name = _newVariableName;
+                        v.InitializePropertyMapping(_overlord);
+                        if(_addVariableLst.ContainsKey(v.PropertyMapping))
+                        {
+                            _addVariableLst[v.PropertyMapping].Add(v);
+                        }
+                        else
+                        {
+                            List<object> lst = new List<object>();
+                            lst.Add(v);
+                            _addVariableLst.Add(v.PropertyMapping, lst);
+                        }
+                        _newVariableName = "";
+                    }
+                    else
+                    {
+                        EditorUtility.DisplayDialog("Tip", "Rename the variables.", "OK");
+                    }
+                }
+            }
+            GUILayout.EndHorizontal();
+
+            if(0 != _overlord.data.variableLst.Count)
+            {
+                foreach(var vl in _overlord.data.variableLst)
+                {
+                    GUILayout.BeginVertical("Box");
+                    {
+                        for (int i = 0; i < vl.Value.Count; i++)
+                        {
+                            if (0 != i)
+                                GKEditor.DrawMiniInspectorSeperator();
+
+                            GKToyVariable v = (GKToyVariable)vl.Value[i];
+
+                            GUILayout.BeginHorizontal();
+                            {
+                                GUILayout.BeginVertical();
+                                {
+                                    GUILayout.Label(v.Name);
+                                    GKEditor.DrawBaseControl(true, v.GetValue(), (obj) => { v.SetValue(obj); });
+                                }
+                                GUILayout.EndVertical();
+
+                                GUI.backgroundColor = Color.red;
+                                if (GUILayout.Button("X", GUILayout.Width(30), GUILayout.Height(30)))
+                                {
+                                    if (_delVariableLst.ContainsKey(vl.Key))
+                                    {
+                                        _delVariableLst[vl.Key].Add(vl.Value[i]);
+                                    }
+                                    else
+                                    {
+                                        List<object> lst = new List<object>();
+                                        lst.Add(vl.Value[i]);
+                                        _delVariableLst.Add(vl.Key, lst);
+                                    }
+
+                                }
+                                GUI.backgroundColor = _lastBgColor;
+                            }
+                            GUILayout.EndHorizontal();
+                        }
+                    }
+                    GUILayout.EndVertical();  
+                }
+            }
+        }
+
+        // 检测变量是否重名.
+        protected bool IsExistVariable(string key)
+        {
+            if (null == _overlord || 0 == _overlord.data.variableLst.Count)
+                return false;
+
+            foreach (var v in _overlord.data.variableLst.Values)
+            {
+                foreach(var n in v)
+                {
+                    if (((GKToyVariable)n).Name.Equals(key))
+                        return true;
+                }
+            }
+            return false;
+        }
+        #endregion
+
+        #region Content
+
+        //------------------------------ Link ------------------------------
+
+        // 渲染链接线段.
+        private void DrawLinks()
         {
             if (null == Event.current)
                 return;
@@ -1066,6 +1234,22 @@ namespace GKToy
 			// 子类树生成.
 			typeManager = new GKToyMakerTypeManager(typeof(GKToyNode));
 			root = TreeNode.Get().GenerateFileTree(typeManager.typeAttributeDict);
+
+            // 初始化变量类型.
+            _variableType.Clear();
+            foreach(var t in typeof(GKToyVariable).Assembly.GetTypes())
+            {
+                if(t.IsSubclassOf(typeof(GKToyVariable)))
+                {
+                    _variableType.Add(t);
+                }
+            }
+            _variableType.RemoveAt(0);
+            _variableTypeNames = GK.TypesToString(_variableType.ToArray());
+            for (int i = 0; i < _variableTypeNames.Length; i++)
+            {
+                _variableTypeNames[i] = _variableTypeNames[i].Replace("GKToy.", "");
+            }
 		}
 
         // 序列化点选对象变更.
@@ -1097,6 +1281,7 @@ namespace GKToy
             {
                 curNodeIdx = _overlord.data.nodeGuid;
                 curLinkIdx = _overlord.data.linkGuid;
+                _overlord.data.LoadVariable();
             }
         }
 

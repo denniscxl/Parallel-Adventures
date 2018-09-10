@@ -701,5 +701,184 @@ namespace GKBase
             Handles.DrawAAPolyLine(3, to + v1, to, to + v2);
             Handles.EndGUI();
         }
+
+        /// <summary>
+        /// 设置基础的控件
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="enable"></param>
+        /// <param name="value"></param>
+        /// <param name="setValue"></param>
+        public static void DrawBaseControl(bool enable, object value, Action<object> setValue)
+        {
+            if (value is Enum)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.EnumPopup(value as Enum);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.LabelField((value as Enum).ToString());
+                }
+            }
+            else if (value is Bounds)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.BoundsField((Bounds)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.BoundsField((Bounds)value);
+                }
+            }
+            else if (value is Color)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.ColorField((Color)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.ColorField((Color)value);
+                }
+            }
+            else if (value is AnimationCurve)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.CurveField((AnimationCurve)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.CurveField((AnimationCurve)value);
+                }
+            }
+            else if (value is string)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.TextField(value as string);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.LabelField(value as string);
+                }
+            }
+            else if (value is float)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.FloatField((float)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.LabelField(value as string);
+                }
+            }
+            else if (value is double)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.DoubleField((double)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.LabelField(value as string);
+                }
+            }
+            else if (value is int)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.IntField((int)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.LabelField(value as string);
+                }
+            }
+            else if (value is long)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.LongField((long)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.LabelField(value as string);
+                }
+            }
+            else if (value is bool)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.Toggle((bool)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.LabelField(((bool)value).ToString());
+                }
+            }
+            else if (value is Vector2)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.Vector2Field("", (Vector2)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.Vector2Field("", (Vector2)value);
+                }
+            }
+            else if (value is Vector3)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.Vector3Field("", (Vector3)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.Vector3Field("", (Vector3)value);
+                }
+            }
+            else if (value is Vector4)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.Vector4Field("", (Vector4)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.Vector4Field("", (Vector4)value);
+                }
+            }
+            else if (value is Rect)
+            {
+                if (enable)
+                {
+                    value = EditorGUILayout.RectField("", (Rect)value);
+                    setValue(value);
+                }
+                else
+                {
+                    EditorGUILayout.RectField("", (Rect)value);
+                }
+            }
+        }
     }
 }

@@ -2,48 +2,54 @@
 
 namespace GKToy
 {
+    [System.Serializable]
     public abstract class GKToyVariable
     {
+
         [SerializeField]
         private bool isGlobal;
         public bool IsGlobal
         {
-            get;
-            set;
+            get { return isGlobal;}
+            set { isGlobal = value; }
         }
 
         [SerializeField]
         private string name;
         public string Name
         {
-            get;
-            set;
+            get { return name; }
+            set { name = value; }
         }
 
         [SerializeField]
         private string propertyMapping;
         public string PropertyMapping
         {
-            get;
-            set;
+            get { return propertyMapping; }
+            set { propertyMapping = value; }
         }
 
         [SerializeField]
-        private GameObject propertyMappingOwner;
-        public GameObject PropertyMappingOwner
+        private GKToyBaseOverlord propertyMappingOwner;
+        public GKToyBaseOverlord PropertyMappingOwner
         {
-            get;
-            set;
+            get { return propertyMappingOwner; }
+            set { propertyMappingOwner = value; }
         }
 
         public void ValueChanged()
         {
-            
+            if(null != PropertyMappingOwner)
+            {
+                PropertyMappingOwner.data.varuableChanged = true;
+            }
         }
 
         public virtual void InitializePropertyMapping(GKToyBaseOverlord overlord)
         {
-            
+            PropertyMappingOwner = overlord;
+            PropertyMapping = GetType().ToString();
         }
 
         public abstract object GetValue();

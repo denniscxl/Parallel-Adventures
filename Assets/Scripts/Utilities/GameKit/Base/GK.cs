@@ -1084,6 +1084,19 @@ namespace GKBase
 			tex.LoadImage(imgByte);
 			return tex;
 		}
+
+        public static string [] TypesToString(Type [] types)
+        {
+            if (null == types)
+                return null;
+            List<string> lst = new List<string>();
+            foreach(var t in types)
+            {
+                lst.Add(t.ToString());
+            }
+            return lst.ToArray();
+        }
+
 	}
 }
 

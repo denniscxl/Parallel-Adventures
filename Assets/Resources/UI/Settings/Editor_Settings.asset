@@ -18,7 +18,7 @@ MonoBehaviour:
     _maxWidth: 1920
     _maxHeight: 1280
     _lineHeight: 20
-    _informationWidth: 240
+    _informationWidth: 280
     _layoutSpace: 4
     _infoMaxLineChar: 25
     _charWidth: 12

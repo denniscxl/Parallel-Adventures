@@ -1,23 +1,18 @@
 ﻿using UnityEngine;
+using UnityEditor;
 
 namespace GKToy
 {
+    [System.Serializable]
     public abstract class GKToyShardVariable<T> : GKToyVariable
     {
-        //private Func<T> mGetter;
-        //private Action<T> mSetter;
 
         [SerializeField]
         protected T mValue;
         public T Value
         {
-            get;
-            set;
-        }
-
-        public override void InitializePropertyMapping(GKToyBaseOverlord overlord)
-        {
-            
+            get { return mValue; }
+            set { mValue = value; }
         }
 
         public override object GetValue()
@@ -28,6 +23,7 @@ namespace GKToy
         public override void SetValue(object value)
         {
             Value = (T)value;
+            ValueChanged();
         }
 
         public override string ToString()
