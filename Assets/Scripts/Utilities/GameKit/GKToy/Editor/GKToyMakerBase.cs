@@ -4,11 +4,6 @@ using UnityEditor;
 using GKBase;
 using System;
 
-/**
- * 游戏模块编辑器基类.
- * 各模块编辑器窗口基类.
- * 核心功能: 支持模块逻辑编辑.
- */
 namespace GKToy
 {
     public class GKToyMakerBase : EditorWindow
