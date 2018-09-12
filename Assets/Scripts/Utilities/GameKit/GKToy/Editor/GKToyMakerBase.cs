@@ -527,7 +527,7 @@ namespace GKToy
             // 变量数据更新.
             if (0 != _addVariableLst.Count)
             {
-                _overlord.data.varuableChanged = true;
+                _overlord.data.variableChanged = true;
                 foreach (var v in _addVariableLst)
                 {
                     foreach(var obj in v.Value)
@@ -549,7 +549,7 @@ namespace GKToy
 
             if (0 != _delVariableLst.Count)
             {
-                _overlord.data.varuableChanged = true;
+                _overlord.data.variableChanged = true;
                 foreach (var v in _delVariableLst)
                 {
                     foreach (var obj in v.Value)
@@ -560,9 +560,9 @@ namespace GKToy
                 _delVariableLst.Clear();
             }
 
-            if(_overlord.data.varuableChanged)
+            if(_overlord.data.variableChanged)
             {
-                _overlord.data.varuableChanged = false;
+                _overlord.data.variableChanged = false;
                 _overlord.data.SaveVariable();
             }
 
@@ -1026,22 +1026,31 @@ namespace GKToy
 
             GUILayout.Label("Comment", GUILayout.Height(toyMakerBase._lineHeight));
             node.comment = GUILayout.TextArea(node.comment, GUILayout.Height(toyMakerBase._lineHeight * 5));
+
 			// 绘制节点属性.
-			Type t = node.GetType();
-			PropertyInfo[] props = t.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-			if (0 != props.Length)
+            if (0 != node.props.Length)
 			{
 				GKEditor.DrawInspectorSeperator();
 				GUILayout.Label("Action Variables");
-				foreach (PropertyInfo prop in props)
-				{
+                for (int i = 0; i < node.props.Length; i++)
+                {
+                    var prop = node.props[i];
                     GUILayout.BeginVertical();
                     {
                         GUILayout.Label(prop.Name);
-                        GKEditor.DrawBaseControl(true, prop.GetValue(node, null), (obj) => { prop.SetValue(node, obj, null); });
+
+                        GUILayout.BeginHorizontal();
+                        {
+                            GKEditor.DrawBaseControl(true, prop.GetValue(node, null), (obj) => { prop.SetValue(node, obj, null); });
+                            if (GUILayout.Button("●", GUILayout.Width(18), GUILayout.Height(16))) 
+                            {
+                                
+                            }
+                        }
+                        GUILayout.EndHorizontal();
                     }
                     GUILayout.EndVertical();
-				}
+                }
 			}
 			if (0 != node.links.Count)
             {
@@ -1145,6 +1154,7 @@ namespace GKToy
         // 增加节点.
         protected void CreateNode(GKToyNode node)
         {
+            node.Init();
             _tmpSelectNode = node;
 			node.id = curNodeIdx++;
 			string[] paths = GKToyMakerTypeManager.Instance().typeAttributeDict[node.className].treePath.Split('/');
@@ -1304,8 +1314,7 @@ namespace GKToy
             {
                 curNodeIdx = _overlord.data.nodeGuid;
                 curLinkIdx = _overlord.data.linkGuid;
-                _overlord.data.LoadVariable();
-				_overlord.data.LoadNodes();
+                _overlord.data.Init();
             }
         }
 

@@ -40,6 +40,10 @@ namespace GKToy
         void Start()
         {
             toyMakerBase = Settings.toyMakerBase;
+            data.Init();
+            stateMachine = new GKNodeStateMachine(data.nodeLst);
+            isPlaying = data.startWhenEnable;
+                
         }
 
         // Update is called once per frame
@@ -47,13 +51,7 @@ namespace GKToy
         {
 			if (isPlaying)
 			{
-				if (stateMachine == null)
-					stateMachine = new GKNodeStateMachine(data.nodeLst);
 				stateMachine.Update();
-			}
-			else
-			{
-				stateMachine = null;
 			}
 		}
 

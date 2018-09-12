@@ -42,7 +42,7 @@ namespace GKToy
         {
             if(null != PropertyMappingOwner)
             {
-                PropertyMappingOwner.data.varuableChanged = true;
+                PropertyMappingOwner.data.variableChanged = true;
             }
         }
 

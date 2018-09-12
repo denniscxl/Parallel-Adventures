@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using GKBase;
 using System.Linq;
 using GKStateMachine;
+using System.Reflection;
+using System;
 
 namespace GKToy
 {
@@ -25,15 +26,26 @@ namespace GKToy
         public Rect inputRect;
         public Rect outputRect;
         public bool isMove;
+        public PropertyInfo[] props;
+        public bool[] propStates;
         public List<Link> links = new List<Link>();
 		public GKNodeStateMachine machine;
 		#endregion
 
 		#region PrivateField
+
 		#endregion
 
 		#region PublicMethod
-		public GKToyNode(int _id):base(_id){}
+		public GKToyNode(int _id):base(_id)
+        {
+        }
+
+        virtual public void Init()
+        {
+            Type t = GetType();
+            props = t.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+        }
 
         // 通过ID查找链接.
         public Link GetLinkByID(int id)
@@ -138,6 +150,7 @@ namespace GKToy
 		#endregion
 
 		#region PrivateMethod
+
 		#endregion
 	}
 

@@ -25,10 +25,16 @@ namespace GKToy
 		public List<string> nodeData = new List<string>();
 		public List<string> nodeTypeData = new List<string>();
 		public List<object> nodeLst = new List<object>();
-        public bool varuableChanged = false;
+        public bool variableChanged = false;
         public List<string> variableData = new List<string>();
         public List<string> variableTypeData = new List<string>();
         public Dictionary<string, List<object>> variableLst = new Dictionary<string, List<object>>();
+
+        public void Init()
+        {
+            LoadVariable();
+            LoadNodes();
+        }
 
         // 通过ID查找节点.
         public GKToyNode GetNodeByID(int id)
@@ -142,7 +148,9 @@ namespace GKToy
 				string iconPath = d.Substring(start, end - start);
 				Texture icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
 				string data = Regex.Replace(d, "\"icon\":\".*?\"", "\"icon\":{\"instanceID\":" + icon.GetInstanceID() + "}");
-				nodeLst.Add(JsonUtility.FromJson(data, t));
+                var n = (GKToyNode)JsonUtility.FromJson(data, t);
+                n.Init();
+				nodeLst.Add(n);
 				i++;
 			}
 		}
