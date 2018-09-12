@@ -23,6 +23,8 @@ namespace GKToy
         }
         public static Editor_Settings.ToyMakerBase toyMakerBase = null;
         public GKToyData data = new GKToyData();
+		public GKNodeStateMachine stateMachine;
+		public bool isPlaying = false;
         #endregion
 
         #region PrivateField
@@ -43,8 +45,17 @@ namespace GKToy
         // Update is called once per frame
         void Update()
         {
-
-        }
+			if (isPlaying)
+			{
+				if (stateMachine == null)
+					stateMachine = new GKNodeStateMachine(data.nodeLst);
+				stateMachine.Update();
+			}
+			else
+			{
+				stateMachine = null;
+			}
+		}
 
         protected void Init()
         {

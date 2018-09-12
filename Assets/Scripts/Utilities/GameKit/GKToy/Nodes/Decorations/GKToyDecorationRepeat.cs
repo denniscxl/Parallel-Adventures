@@ -8,5 +8,7 @@ namespace GKToy
 	[NodeTypeTree("Decoration/Repeat")]
 	public class GKToyDecorationRepeat : GKToyNode
 	{
+		public GKToyDecorationRepeat(int _id) : base(_id) { }
+
 	}
 }

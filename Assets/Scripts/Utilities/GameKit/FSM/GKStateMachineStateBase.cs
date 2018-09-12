@@ -1,8 +1,16 @@
-﻿namespace GKStateMachine
+﻿using UnityEngine;
+
+namespace GKStateMachine
 {
-    public abstract class GKStateMachineStateBase<STATE_ID_T>
-    {
-        public STATE_ID_T ID { get; private set; }
+	public abstract class GKStateMachineStateBase<STATE_ID_T>
+	{
+		[SerializeField]
+		private STATE_ID_T stateId;
+		public STATE_ID_T ID
+		{
+			get { return stateId; }
+			private set { stateId = value; }
+		}
 
         public GKStateMachineStateBase(STATE_ID_T id)
         {

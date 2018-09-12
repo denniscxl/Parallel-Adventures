@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using GKBase;
 using System;
+using System.Reflection;
 
 namespace GKToy
 {
@@ -109,8 +110,6 @@ namespace GKToy
         // GUI 数据备份.
         protected Color _lastColor;
         protected Color _lastBgColor;
-		// 节点种类管理实例.
-		private static GKToyMakerTypeManager typeManager;
 		// 节点种类树根节点.
 		private static TreeNode root = null;
         // 临时变量编辑缓存.
@@ -130,6 +129,7 @@ namespace GKToy
 
 		private void OnEnable()
         {
+			instance = this;
             Init();
             wantsMouseMove = true;
             minSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
@@ -137,7 +137,7 @@ namespace GKToy
             Show();
         }
 
-        private void OnGUI()
+		private void OnGUI()
         {
             EventProcess();
             Render();
@@ -153,6 +153,12 @@ namespace GKToy
             Changed();
             UpdateLinks();
         }
+
+		private void OnDestroy()
+		{
+			_overlord.data.SaveNodes();
+			instance = null;
+		}
 
 		private void Render()
 		{
@@ -261,8 +267,7 @@ namespace GKToy
                 return false;
 
             Vector2 mousePos = Event.current.mousePosition + _contentScrollPos;
-
-            foreach (var node in _overlord.data.nodeLst)
+			foreach (GKToyNode node in _overlord.data.nodeLst)
             {
                 if (node.inputRect.Contains(mousePos))
                 {
@@ -293,8 +298,7 @@ namespace GKToy
 		{
             if (0 == _overlord.data.nodeLst.Count)
 				return false;
-
-            foreach (var node in _overlord.data.nodeLst)
+            foreach (GKToyNode node in _overlord.data.nodeLst)
 			{
 				var links = node.links;
 				if (0 == links.Count)
@@ -337,12 +341,12 @@ namespace GKToy
             if (null == Event.current && null == _selectNode)
                 return;
             Vector2 mousePos = Event.current.mousePosition + _contentScrollPos;
-            foreach (var node in _overlord.data.nodeLst)
+			foreach (GKToyNode node in _overlord.data.nodeLst)
             {
                 if (node.id == _selectNode.id)
                     continue;
 
-                if (node.inputRect.Contains(mousePos) || node.rect.Contains(mousePos) && null == _selectNode.FindLinkFromNode(node))
+                if (node.inputRect.Contains(mousePos) || node.rect.Contains(mousePos) && null == _selectNode.FindLinkFromNode(node.id))
                 {
                     if (!_newLinkLst.ContainsKey(_selectNode.id))
                         _newLinkLst[_selectNode.id] = new List<GKToyNode>();
@@ -447,8 +451,8 @@ namespace GKToy
                 DrawBlackGroundGrid();
                 DrawLinks();
 
-                // 绘制行为节点.
-                foreach (var node in _overlord.data.nodeLst)
+				// 绘制行为节点.
+				foreach (GKToyNode node in _overlord.data.nodeLst)
                 {
                     DrawNode(node, Scale, _isDrag, _mouseOffset, _selectNode);
                     if (_isDrag)
@@ -586,7 +590,7 @@ namespace GKToy
                     {
                         GKToyNode n = _overlord.data.GetNodeByID(link.Key);
                         if (null != n)
-                            n.RemoveLink(l);
+                            n.RemoveLink(l.id);
                     }
                 }
                 _removeLinkLst.Clear();
@@ -605,20 +609,26 @@ namespace GKToy
         {
             if (_isDrag && !_isLinking && null != _selectNode)
             {
-                _selectNode.UpdateAllLinks();
+				foreach(Link l in _selectNode.links)
+				{
+					_selectNode.UpdateLink(l, (GKToyNode)_overlord.data.nodeLst[l.next]);
+				}
                 foreach (GKToyNode node in _overlord.data.nodeLst)
                 {
-                    Link l = node.FindLinkFromNode(_selectNode);
-                    if (null != l)
-                        node.UpdateLink(l);
+                    Link l = node.FindLinkFromNode(_selectNode.id);
+					if (null != l)
+						node.UpdateLink(l, (GKToyNode)_overlord.data.nodeLst[l.next]);
                 }
             }
             else if (_isScale)
             {
                 foreach (GKToyNode node in _overlord.data.nodeLst)
                 {
-                    node.UpdateAllLinks();
-                }
+					foreach (Link l in node.links)
+					{
+						node.UpdateLink(l, (GKToyNode)_overlord.data.nodeLst[l.next]);
+					}
+				}
             }
         }
         #endregion
@@ -670,7 +680,7 @@ namespace GKToy
 					if (GUILayout.Button(node.name))
 					{
 						Type t = typeof(GKToyNode);
-						GKToyNode newNode = (GKToyNode)t.Assembly.CreateInstance("GKToy." + node.key);
+						GKToyNode newNode = t.Assembly.CreateInstance(node.key, true, System.Reflection.BindingFlags.Default, null, new object[] { curNodeIdx }, null, null) as GKToyNode;
 						newNode.className = node.key;
 						newNode.pos.x = (_contentScrollPos.x + toyMakerBase._minWidth * 0.5f) / Scale;
 						newNode.pos.y = (_contentScrollPos.y + toyMakerBase._minHeight * 0.5f) / Scale;
@@ -824,8 +834,8 @@ namespace GKToy
                 Repaint();
             }
 
-            // Draw links.
-            foreach (var node in _overlord.data.nodeLst)
+			// Draw links.
+			foreach (GKToyNode node in _overlord.data.nodeLst)
             {
                 DrawLinks(node, _selectLink);
             }
@@ -1016,8 +1026,24 @@ namespace GKToy
 
             GUILayout.Label("Comment", GUILayout.Height(toyMakerBase._lineHeight));
             node.comment = GUILayout.TextArea(node.comment, GUILayout.Height(toyMakerBase._lineHeight * 5));
-
-            if (0 != node.links.Count)
+			// 绘制节点属性.
+			Type t = node.GetType();
+			PropertyInfo[] props = t.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+			if (0 != props.Length)
+			{
+				GKEditor.DrawInspectorSeperator();
+				GUILayout.Label("Action Variables");
+				foreach (PropertyInfo prop in props)
+				{
+                    GUILayout.BeginVertical();
+                    {
+                        GUILayout.Label(prop.Name);
+                        GKEditor.DrawBaseControl(true, prop.GetValue(node, null), (obj) => { prop.SetValue(node, obj, null); });
+                    }
+                    GUILayout.EndVertical();
+				}
+			}
+			if (0 != node.links.Count)
             {
                 GKEditor.DrawInspectorSeperator();
 
@@ -1034,7 +1060,7 @@ namespace GKToy
                 GUILayout.EndVertical();
             }
         }
-
+		
         // 绘制连接点详情.
         virtual protected void DrawNextDetail(GKToyNode node, ref bool isFirst, Link l, ref Link selected)
         {
@@ -1049,14 +1075,14 @@ namespace GKToy
                 {
                     GUI.backgroundColor = Color.yellow;
                 }
-                if (GUILayout.Button(l.next.name))
+                if (GUILayout.Button(((GKToyNode)_overlord.data.nodeLst[l.next]).name))
                 {
                     selected = l;
                 }
                 GUI.backgroundColor = Color.red;
                 if (GUILayout.Button("X", GUILayout.Width(toyMakerBase._lineHeight)))
                 {
-                    RemoveLink(node.id, l.next);
+                    RemoveLink(node.id, (GKToyNode)_overlord.data.nodeLst[l.next]);
                 }
                 GUI.backgroundColor = _lastBgColor;
             }
@@ -1075,7 +1101,7 @@ namespace GKToy
                 switch (_clickedElement)
                 {
                     case ClickedElement.NoElement:
-						foreach (var item in typeManager.typeAttributeDict)
+						foreach (var item in GKToyMakerTypeManager.Instance().typeAttributeDict)
 						{
 							menu.AddItem(new GUIContent(item.Value.treePath), false, HandleMenuAddNode, new object[]{ Event.current.mousePosition, item.Key });
 						}
@@ -1085,7 +1111,7 @@ namespace GKToy
                     case ClickedElement.NodeElement:
                         break;
                     case ClickedElement.LinkElement:
-                        menu.AddItem(new GUIContent(string.Format("Delete Link: {0} -> {1}", _selectNode.name, _selectLink.next.name)), false, HandleMenuDeleteLink, Event.current.mousePosition);
+                        menu.AddItem(new GUIContent(string.Format("Delete Link: {0} -> {1}", _selectNode.name, ((GKToyNode)_overlord.data.nodeLst[_selectLink.next]).name)), false, HandleMenuDeleteLink, Event.current.mousePosition);
                         break;
                 }
                 menu.ShowAsContext();
@@ -1099,7 +1125,7 @@ namespace GKToy
 			Vector2 mousePos = (Vector2)((object[])userData)[0];
 			string key = (string)((object[])userData)[1];
 			Type t = typeof(GKToyNode);
-			GKToyNode node = (GKToyNode)t.Assembly.CreateInstance("GKToy." + key);
+			GKToyNode node = t.Assembly.CreateInstance(key, true, System.Reflection.BindingFlags.Default, null, new object[] { curNodeIdx}, null, null) as GKToyNode;
 			node.className = key;
             node.pos.x = (mousePos.x) / Scale;
             node.pos.y = (mousePos.y) / Scale;
@@ -1113,7 +1139,7 @@ namespace GKToy
 
         protected void HandleMenuDeleteLink(object userData)
         {
-            RemoveLink(_selectNode.id, _selectLink.next);
+            RemoveLink(_selectNode.id, (GKToyNode)_overlord.data.nodeLst[_selectLink.next]);
         }
 
         // 增加节点.
@@ -1121,8 +1147,8 @@ namespace GKToy
         {
             _tmpSelectNode = node;
 			node.id = curNodeIdx++;
-			string[] paths = typeManager.typeAttributeDict[node.className].treePath.Split('/');
-			string iconPath = typeManager.typeAttributeDict[node.className].iconPath;
+			string[] paths = GKToyMakerTypeManager.Instance().typeAttributeDict[node.className].treePath.Split('/');
+			string iconPath = GKToyMakerTypeManager.Instance().typeAttributeDict[node.className].iconPath;
 			if (paths.Length > 0)
 			{
 				switch (paths[0])
@@ -1130,27 +1156,27 @@ namespace GKToy
 					case "Action":
 						node.nodeType = NodeType.Action;
 						if (iconPath != "")
-							node.icon = GK.LoadTextureFromFile(32, iconPath);
+							node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
 						else
 							node.icon = toyMakerBase._actionIcon;
 						break;
 					case "Condition":
 						node.nodeType = NodeType.Condition;
 						if (iconPath != "")
-							node.icon = GK.LoadTextureFromFile(32, iconPath);
+							node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
 						else
 							node.icon = toyMakerBase._conditionIcon;
 						break;
 					case "Decoration":
 						node.nodeType = NodeType.Decoration;
 						if (iconPath != "")
-							node.icon = GK.LoadTextureFromFile(32, iconPath);
+							node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
 						else
 							node.icon = toyMakerBase._decorationIcon;
 						break;
 					default:
 						if (iconPath != "")
-							node.icon = GK.LoadTextureFromFile(32, iconPath);
+							node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
 						else
 							node.icon = toyMakerBase._defaultIcon;
 						break;
@@ -1201,11 +1227,10 @@ namespace GKToy
             if (null != _overlord)
             {
                 ResetSelected(_overlord);
-            }
-
-
-            // 数据备份.
-            _lastColor = GUI.color; ;
+			}
+			EditorApplication.playModeStateChanged += SaveDataWhenPlayModeChange;
+			// 数据备份.
+			_lastColor = GUI.color; ;
             _lastBgColor = GUI.backgroundColor;
 
             // 数据导入.
@@ -1227,8 +1252,7 @@ namespace GKToy
             _nonContentRect = new Rect((toyMakerBase._minWidth - 206) * 0.5f, (toyMakerBase._minHeight - 100) * 0.5f, 206, 100);
 
 			// 子类树生成.
-			typeManager = new GKToyMakerTypeManager(typeof(GKToyNode));
-			root = TreeNode.Get().GenerateFileTree(typeManager.typeAttributeDict);
+			root = TreeNode.Get().GenerateFileTree(GKToyMakerTypeManager.Instance().typeAttributeDict);
 
             // 初始化变量类型.
             _variableType.Clear();
@@ -1267,7 +1291,11 @@ namespace GKToy
         // 重置选择.
         protected void ResetSelected(GKToyBaseOverlord target)
         {
-            _overlord = target;
+			if (null != _overlord)
+			{
+				_overlord.data.SaveNodes();
+			}
+			_overlord = target;
             _selectNode = null;
             _selectLink = null;
             Scale = 1;
@@ -1277,6 +1305,7 @@ namespace GKToy
                 curNodeIdx = _overlord.data.nodeGuid;
                 curLinkIdx = _overlord.data.linkGuid;
                 _overlord.data.LoadVariable();
+				_overlord.data.LoadNodes();
             }
         }
 
@@ -1287,6 +1316,25 @@ namespace GKToy
             var tmpOverload = GK.GetOrAddComponent<GKToyBaseOverlord>(go);
             _overlord = tmpOverload;
         }
+
+		private void SaveDataWhenPlayModeChange(PlayModeStateChange state)
+		{
+			if (state == PlayModeStateChange.ExitingEditMode)
+			{
+				if (_overlord != null)
+				{
+					_overlord.data.SaveNodes();
+				}
+			}
+			else if (state == PlayModeStateChange.EnteredPlayMode || state == PlayModeStateChange.EnteredEditMode)
+			{
+				var assets = Selection.GetFiltered<GKToyBaseOverlord>(SelectionMode.Assets);
+				if (0 == assets.Length)
+					return;
+				else
+					ResetSelected(assets[0]);
+			}
+		}
         #endregion
 
         public enum InformationType

@@ -1,6 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEditor.Callbacks;
+using UnityEditor;
+using System.Text.RegularExpressions;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 namespace GKToy
 {
@@ -16,8 +21,10 @@ namespace GKToy
         public bool destoryWhenCompleted = true;
         public int nodeGuid = 0;
         public int linkGuid = 0;
-        // Node链表.
-        public List<GKToyNode> nodeLst = new List<GKToyNode>();
+		// Node链表.
+		public List<string> nodeData = new List<string>();
+		public List<string> nodeTypeData = new List<string>();
+		public List<object> nodeLst = new List<object>();
         public bool varuableChanged = false;
         public List<string> variableData = new List<string>();
         public List<string> variableTypeData = new List<string>();
@@ -26,7 +33,7 @@ namespace GKToy
         // 通过ID查找节点.
         public GKToyNode GetNodeByID(int id)
         {
-            foreach (var n in nodeLst)
+			foreach (GKToyNode n in nodeLst)
             {
                 if (n.id == id)
                     return n;
@@ -46,7 +53,6 @@ namespace GKToy
         // 变量转化为Json存储.
         public void SaveVariable()
         {
-            Debug.Log("SaveVariable");
             variableData.Clear();
             variableTypeData.Clear();
             foreach (var objs in variableLst)
@@ -57,12 +63,17 @@ namespace GKToy
                     variableTypeData.Add(objs.Key);
                 }
             }
-        }
+			// 设置场景有更新.
+			if (!Application.isPlaying)
+			{
+				Scene scene = SceneManager.GetActiveScene();
+				EditorSceneManager.MarkSceneDirty(scene);
+			}
+		}
 
         // Json转化为变量.
         public void LoadVariable()
         {
-            Debug.Log("LoadVariable");
             variableLst.Clear();
             int i = 0;
             foreach (var d in variableData)
@@ -82,5 +93,58 @@ namespace GKToy
                 i++;
             }
         }
-    }
+
+		// 节点转化为Json存储.
+		public void SaveNodes()
+		{
+			nodeTypeData.Clear();
+			List<string> tmpNodeData = new List<string>();
+			foreach (var obj in nodeLst)
+			{
+				string iconPath = AssetDatabase.GetAssetPath(((GKToyNode)obj).icon);
+				string data = Regex.Replace(JsonUtility.ToJson(obj), "\"icon\":{.*?}", string.Format("\"icon\":\"{0}\"", iconPath));
+				tmpNodeData.Add(data);
+				nodeTypeData.Add(((GKToyNode)obj).className);
+			}
+			// 设置场景有更新.
+			if (!Application.isPlaying)
+			{
+				bool isChanged = false;
+				if (tmpNodeData.Count == nodeData.Count)
+				{
+					for(int i = 0; i < tmpNodeData.Count; ++i)
+					{
+						if (!tmpNodeData[i].Equals(nodeData[i]))
+							isChanged = true;
+					}
+				}
+				else
+					isChanged = true;
+				if (isChanged)
+				{
+					Scene scene = SceneManager.GetActiveScene();
+					EditorSceneManager.MarkSceneDirty(scene);
+				}
+			}
+			nodeData = tmpNodeData;
+		}
+
+		// Json转化为节点.
+		public void LoadNodes()
+		{
+			nodeLst.Clear();
+			int i = 0;
+			foreach (var d in nodeData)
+			{
+				Type t = Type.GetType(nodeTypeData[i]);
+				int start = d.IndexOf("\"icon\":\"") + 8;
+				int end = d.IndexOf("\",", start);
+				string iconPath = d.Substring(start, end - start);
+				Texture icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
+				string data = Regex.Replace(d, "\"icon\":\".*?\"", "\"icon\":{\"instanceID\":" + icon.GetInstanceID() + "}");
+				nodeLst.Add(JsonUtility.FromJson(data, t));
+				i++;
+			}
+		}
+	}
 }
