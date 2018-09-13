@@ -14,9 +14,10 @@ namespace GKToy
         string m_InputValue = string.Empty;
 		[SerializeField]
         string m_TargetValue = string.Empty;
-         
 		[SerializeField]
 		CompareType m_CompareType = CompareType.LessThan;
+
+		IComparable value1, value2;
 
 		public string Input
 		{
@@ -35,6 +36,28 @@ namespace GKToy
 		}
 
 		public GKToyConditionCompare(int _id) : base(_id) { }
+
+		public override void Enter()
+		{
+			base.Enter();
+			int intRes1, intRes2;
+			if (int.TryParse(m_InputValue, out intRes1) && int.TryParse(m_TargetValue, out intRes2))
+			{
+				value1 = intRes1;
+				value2 = intRes2;
+				return;
+			}
+			float floatRes1, floatRes2;
+			if (float.TryParse(m_InputValue, out floatRes1) && float.TryParse(m_TargetValue, out floatRes2))
+			{
+				value1 = floatRes1;
+				value2 = floatRes2;
+				return;
+			}
+			value1 = m_InputValue;
+			value2 = m_TargetValue;
+			return;
+		}
 		public override int Update()
 		{
 			bool res = false;
@@ -56,17 +79,19 @@ namespace GKToy
 			if (res)
 			{
 				machine.GoToState(id, links.Select(x => x.next).ToList());
+				state = NodeState.Success;
 			}
 			else
 			{
 				machine.LeaveState(id);
+				state = NodeState.Fail;
 			}
 			return base.Update();
 		}
 
 		private bool IsLessThan()
 		{
-			if (m_InputValue.CompareTo(m_TargetValue) < 0)
+			if (value1.CompareTo(value2) < 0)
 				return true;
 			else
 				return false;
@@ -74,7 +99,7 @@ namespace GKToy
 
 		private bool IsBiggerThan()
 		{
-			if (m_InputValue.CompareTo(m_TargetValue) > 0)
+			if (value1.CompareTo(value2) > 0)
 				return true;
 			else
 				return false;
@@ -82,7 +107,7 @@ namespace GKToy
 
 		private bool IsEqualTo()
 		{
-			if (m_InputValue.CompareTo(m_TargetValue) == 0)
+			if (value1.CompareTo(value2) == 0)
 				return true;
 			else
 				return false;
@@ -90,12 +115,11 @@ namespace GKToy
 
 		private bool IsNotEqualTo()
 		{
-			if (m_InputValue.CompareTo(m_TargetValue) != 0)
+			if (value1.CompareTo(value2) != 0)
 				return true;
 			else
 				return false;
 		}
-
 
 		public enum CompareType
 		{

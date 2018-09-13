@@ -59,6 +59,10 @@ public class Editor_Settings : ScriptableObject
 		public Texture _actionIcon;
 		public Texture _conditionIcon;
 		public Texture _decorationIcon;
-    }
+		// 节点状态标志.
+		public Texture _activatedMark;
+		public Texture _successMark;
+		public Texture _failMark;
+	}
     public  ToyMakerBase toyMakerBase = new ToyMakerBase();
 }

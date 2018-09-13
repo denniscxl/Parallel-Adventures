@@ -306,3 +306,6 @@ MonoBehaviour:
     _actionIcon: {fileID: 2800000, guid: dfece53b0da90ab4a90522243e67f1bf, type: 3}
     _conditionIcon: {fileID: 2800000, guid: 2a449f006bf3ce14a9f05d24cdb5f1cc, type: 3}
     _decorationIcon: {fileID: 2800000, guid: 82754def7e7eadc4ea04566c54bcb836, type: 3}
+    _activatedMark: {fileID: 2800000, guid: 3deaaf73231124cd3b35b1928cb380e3, type: 3}
+    _successMark: {fileID: 2800000, guid: 8305984bff8ea44afb05ed48a0f33c74, type: 3}
+    _failMark: {fileID: 2800000, guid: 868c925fa4e1f48a181a13fc88fa2d02, type: 3}

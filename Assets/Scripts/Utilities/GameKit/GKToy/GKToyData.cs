@@ -24,27 +24,18 @@ namespace GKToy
 		// Node链表.
 		public List<string> nodeData = new List<string>();
 		public List<string> nodeTypeData = new List<string>();
-		public List<object> nodeLst = new List<object>();
+		public Dictionary<int, object> nodeLst = new Dictionary<int, object>();
         public bool variableChanged = false;
         public List<string> variableData = new List<string>();
         public List<string> variableTypeData = new List<string>();
         public Dictionary<string, List<object>> variableLst = new Dictionary<string, List<object>>();
+        private GKToyBaseOverlord _overlord;
 
-        public void Init()
+        public void Init(GKToyBaseOverlord overlord)
         {
+            _overlord = overlord;
             LoadVariable();
             LoadNodes();
-        }
-
-        // 通过ID查找节点.
-        public GKToyNode GetNodeByID(int id)
-        {
-			foreach (GKToyNode n in nodeLst)
-            {
-                if (n.id == id)
-                    return n;
-            }
-            return null;
         }
 
         // 变量元素.
@@ -69,12 +60,14 @@ namespace GKToy
                     variableTypeData.Add(objs.Key);
                 }
             }
+#if UNITY_EDITOR
 			// 设置场景有更新.
 			if (!Application.isPlaying)
 			{
 				Scene scene = SceneManager.GetActiveScene();
 				EditorSceneManager.MarkSceneDirty(scene);
 			}
+#endif
 		}
 
         // Json转化为变量.
@@ -105,13 +98,12 @@ namespace GKToy
 		{
 			nodeTypeData.Clear();
 			List<string> tmpNodeData = new List<string>();
-			foreach (var obj in nodeLst)
+			foreach (var obj in nodeLst.Values)
 			{
-				string iconPath = AssetDatabase.GetAssetPath(((GKToyNode)obj).icon);
-				string data = Regex.Replace(JsonUtility.ToJson(obj), "\"icon\":{.*?}", string.Format("\"icon\":\"{0}\"", iconPath));
-				tmpNodeData.Add(data);
+				tmpNodeData.Add(JsonUtility.ToJson(obj));
 				nodeTypeData.Add(((GKToyNode)obj).className);
 			}
+#if UNITY_EDITOR
 			// 设置场景有更新.
 			if (!Application.isPlaying)
 			{
@@ -132,6 +124,7 @@ namespace GKToy
 					EditorSceneManager.MarkSceneDirty(scene);
 				}
 			}
+#endif
 			nodeData = tmpNodeData;
 		}
 
@@ -143,14 +136,9 @@ namespace GKToy
 			foreach (var d in nodeData)
 			{
 				Type t = Type.GetType(nodeTypeData[i]);
-				int start = d.IndexOf("\"icon\":\"") + 8;
-				int end = d.IndexOf("\",", start);
-				string iconPath = d.Substring(start, end - start);
-				Texture icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
-				string data = Regex.Replace(d, "\"icon\":\".*?\"", "\"icon\":{\"instanceID\":" + icon.GetInstanceID() + "}");
-                var n = (GKToyNode)JsonUtility.FromJson(data, t);
-                n.Init();
-				nodeLst.Add(n);
+				var n = (GKToyNode)JsonUtility.FromJson(d, t);
+                n.Init(_overlord);
+				nodeLst.Add(n.id,n);
 				i++;
 			}
 		}

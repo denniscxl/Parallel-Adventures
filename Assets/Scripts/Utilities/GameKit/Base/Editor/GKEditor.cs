@@ -879,6 +879,18 @@ namespace GKBase
                     EditorGUILayout.RectField("", (Rect)value);
                 }
             }
+			else if(value is UnityEngine.Object)
+			{
+				if (enable)
+				{
+					value = EditorGUILayout.ObjectField((UnityEngine.Object)value, value.GetType(), true);
+					setValue(value);
+				}
+				else
+				{
+					EditorGUILayout.ObjectField((UnityEngine.Object)value, value.GetType(), true);
+				}
+			}
         }
     }
 }

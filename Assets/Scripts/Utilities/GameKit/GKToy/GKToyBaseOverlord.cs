@@ -2,6 +2,7 @@
 using UnityEngine;
 using GKBase;
 using System;
+using System.Linq;
 
 namespace GKToy
 {
@@ -32,7 +33,35 @@ namespace GKToy
         #endregion
 
         #region PublicMethod
+        // 根据对象类型获取相同类型变量名称列表.
+        List<string> tmpVarNames = new List<string>();
+        public List<string> GetVariableNameListByType(object val)
+        {
+            tmpVarNames.Clear();
+            foreach (var v in data.variableLst)
+            {
+                if (val.GetType() == v.Value[0].GetType())
+                {
+                    foreach (var ele in v.Value)
+                        tmpVarNames.Add(((GKToyVariable)ele).Name);
+                    return tmpVarNames;
+                }
+            }
+            return tmpVarNames;
+        }
 
+        // 根据对象类型获取相同类型变量列表.
+        public List<object> GetVariableListByType(object val)
+        {
+            foreach (var v in data.variableLst)
+            {
+                if (val.GetType() == v.Value[0].GetType())
+                {
+                    return v.Value;
+                }
+            }
+            return null;
+        }
         #endregion
 
         #region PrivateMethod
@@ -40,8 +69,8 @@ namespace GKToy
         void Start()
         {
             toyMakerBase = Settings.toyMakerBase;
-            data.Init();
-            stateMachine = new GKNodeStateMachine(data.nodeLst);
+            data.Init(this);
+            stateMachine = new GKNodeStateMachine(data.nodeLst.Values.ToList());
             isPlaying = data.startWhenEnable;
                 
         }

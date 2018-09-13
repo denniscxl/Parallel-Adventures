@@ -30,6 +30,8 @@ namespace GKToy
         public int [] propStates;
         public List<Link> links = new List<Link>();
 		public GKNodeStateMachine machine;
+		public NodeState state;
+        private GKToyBaseOverlord _overlord;
 		#endregion
 
 		#region PrivateField
@@ -41,8 +43,10 @@ namespace GKToy
         {
         }
 
-        virtual public void Init()
+        virtual public void Init(GKToyBaseOverlord ovelord)
         {
+            _overlord = ovelord;
+
             Type t = GetType();
             props = t.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
             var fs = t.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
@@ -52,6 +56,21 @@ namespace GKToy
                 for (int i = 0; i < props.Length; i++)
                 {
                     propStates[i] = -1;
+                }
+            }
+			state = NodeState.Inactive;
+
+            // 引用变量赋值.
+            for (int i = 0; i < props.Length; i++)
+            {
+                if(-1 != propStates[i])
+                {
+                    var v = props[i].GetValue(this, null);
+                    var vlst = _overlord.GetVariableListByType(v);
+                    if(vlst.Count > propStates[i])
+                    {
+                        props[i].SetValue(this, ((GKToyVariable)vlst[propStates[i]]), null);
+                    }
                 }
             }
         }
@@ -79,23 +98,6 @@ namespace GKToy
             link.points = new List<Vector2>(GK.ClacLinePoint(src, dest, out vertical));
             link.isFirstVertical = vertical;
         }
-
-		///// <summary>
-		///// 鼠标拖拽本节点时，更新所有连线的坐标
-		///// </summary>
-		//public void UpdateAllLinks()
-		//{
-		//	Vector2 src = new Vector2(outputRect.x + outputRect.width, outputRect.y + outputRect.height * 0.5f);
-		//	Vector2 dest;
-		//	bool vertical;
-		//	foreach (Link link in links)
-		//	{
-		//		vertical = false;
-		//		dest = new Vector2(link.next.inputRect.x, link.next.inputRect.y + link.next.inputRect.height * 0.5f);
-		//		link.points = new List<Vector2>(GK.ClacLinePoint(src, dest, out vertical));
-		//		link.isFirstVertical = vertical;
-		//	}
-		//}
 
         /// <summary>
         /// 添加连线
@@ -144,6 +146,7 @@ namespace GKToy
 
 		public override void Enter()
 		{
+			state = NodeState.Activated;
 			Debug.Log("Enter " + name);
 		}
 
@@ -181,5 +184,13 @@ namespace GKToy
 			isFirstVertical = _isFirstVertical;
 			next = _next;
 		}
+	}
+
+	public enum NodeState
+	{
+		Inactive = 0,
+		Activated,
+		Success,
+		Fail
 	}
 }

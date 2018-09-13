@@ -54,6 +54,11 @@ namespace GKToy
 			_currentRemovingState.Add(stateId);
 		}
 
+		public void LeaveStates(List<STATE_ID_T> stateIds)
+		{
+			_currentRemovingState.AddRange(stateIds);
+		}
+
 		public void Update()
 		{
 			if (_states.Count == 0)

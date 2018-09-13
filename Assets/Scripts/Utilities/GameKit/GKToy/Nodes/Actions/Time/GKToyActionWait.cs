@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace GKToy
 {
-	[NodeTypeTree("Action/Wait","Assets/Art/GKToyMaker/Icon/Wait.png")]
+	[NodeTypeTree("Action/Time/Wait", "Assets/Art/GKToyMaker/Icon/Wait.png")]
 	public class GKToyActionWait : GKToyNode
     {
 		[SerializeField]
-		private float m_WaitTime;
-		public float WaitTime
+        private GKToySharedFloat m_WaitTime = 0;
+        public GKToySharedFloat WaitTime
 		{
 			get { return m_WaitTime; }
 			set { m_WaitTime = value; }
@@ -26,9 +26,10 @@ namespace GKToy
 		public override int Update()
 		{
 			curTime += Time.deltaTime;
-			if (curTime >= m_WaitTime)
+            if (curTime >= (float)m_WaitTime.GetValue())
 			{
 				machine.GoToState(id, links.Select(x => x.next).ToList());
+				state = NodeState.Success;
 			}
 			return base.Update();
 		}
