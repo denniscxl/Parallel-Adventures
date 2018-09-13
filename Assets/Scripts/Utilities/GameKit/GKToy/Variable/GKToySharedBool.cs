@@ -5,11 +5,6 @@
     {
         public static implicit operator GKToySharedBool(bool value) { return new GKToySharedBool { mValue = value }; }
 
-        public override void InitializePropertyMapping(GKToyBaseOverlord overlord)
-        {
-            base.InitializePropertyMapping(overlord);
-        }
-
         public override void SetValue(object value)
         {
             if(Value != (bool)value)

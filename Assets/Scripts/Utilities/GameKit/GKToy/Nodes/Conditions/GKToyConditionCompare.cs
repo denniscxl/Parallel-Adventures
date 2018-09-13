@@ -11,9 +11,10 @@ namespace GKToy
 	public class GKToyConditionCompare : GKToyNode
 	{
 		[SerializeField]
-        string m_InputValue = String.Empty;
+        string m_InputValue = string.Empty;
 		[SerializeField]
-        string m_TargetValue = String.Empty;
+        string m_TargetValue = string.Empty;
+         
 		[SerializeField]
 		CompareType m_CompareType = CompareType.LessThan;
 

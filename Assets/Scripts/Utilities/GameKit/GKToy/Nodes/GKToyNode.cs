@@ -27,7 +27,7 @@ namespace GKToy
         public Rect outputRect;
         public bool isMove;
         public PropertyInfo[] props;
-        public bool[] propStates;
+        public int [] propStates;
         public List<Link> links = new List<Link>();
 		public GKNodeStateMachine machine;
 		#endregion
@@ -45,6 +45,15 @@ namespace GKToy
         {
             Type t = GetType();
             props = t.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            var fs = t.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            if(null == propStates)
+            {
+                propStates = new int[props.Length];
+                for (int i = 0; i < props.Length; i++)
+                {
+                    propStates[i] = -1;
+                }
+            }
         }
 
         // 通过ID查找链接.

@@ -814,6 +814,23 @@ namespace GKToy
             }
             return false;
         }
+
+        // 根据对象类型获取相同类型变量名称列表.
+        List<string> tmpVarNames = new List<string>();
+        public List<string> GetVariableListByType(object val)
+        {
+            tmpVarNames.Clear();
+            foreach(var v in _overlord.data.variableLst)
+            {
+                if(val.GetType() == v.Value[0].GetType())
+                {
+                    foreach (var ele in v.Value)
+                        tmpVarNames.Add(((GKToyVariable)ele).Name);
+                    return tmpVarNames;
+                }
+            }
+            return tmpVarNames;
+        }
         #endregion
 
         #region Content
@@ -1041,11 +1058,31 @@ namespace GKToy
 
                         GUILayout.BeginHorizontal();
                         {
-                            GKEditor.DrawBaseControl(true, prop.GetValue(node, null), (obj) => { prop.SetValue(node, obj, null); });
-                            if (GUILayout.Button("●", GUILayout.Width(18), GUILayout.Height(16))) 
+                            var v = prop.GetValue(node, null);
+                            if(-1 != node.propStates[i])
+                            {
+                                var lst = GetVariableListByType(v);
+                                node.propStates[i] = EditorGUILayout.Popup(node.propStates[i], lst.ToArray());
+                                GUI.backgroundColor = Color.gray;
+                            }
+                            else
                             {
                                 
+                                // 处理自定义变量.
+                                if (v is GKToyVariable)
+                                {
+                                    GKEditor.DrawBaseControl(true, ((GKToyVariable)v).GetValue(), (obj) => { ((GKToyVariable)v).SetValue(obj); });
+                                }
+                                else
+                                {
+                                    GKEditor.DrawBaseControl(true, v, (obj) => { prop.SetValue(node, obj, null); });
+                                }
                             }
+                            if (GUILayout.Button("●", GUILayout.Width(18), GUILayout.Height(16)))
+                            {
+                                node.propStates[i] = ((-1 == node.propStates[i]) ? 0 : -1);
+                            }
+                            GUI.backgroundColor = _lastBgColor;
                         }
                         GUILayout.EndHorizontal();
                     }
