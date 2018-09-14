@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GKToy
 {
-    [NodeTypeTree("Action/Math/GKToyActionTwoValueCalc")]
+    [NodeTypeTree("Action/Math/DoubleValueCalc")]
 	public class GKToyActionTwoValueCalc : GKToyNode
 	{
 		[SerializeField]

@@ -129,12 +129,15 @@ namespace GKToy
 
 		private void OnEnable()
         {
-			instance = this;
-            Init();
-            wantsMouseMove = true;
-            minSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
-            maxSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
-            Show();
+			if(null == instance)
+			{
+				instance = this;
+				Init();
+				wantsMouseMove = true;
+				minSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
+				maxSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
+				Show();
+			}
         }
 
 		private void OnGUI()
@@ -1007,9 +1010,9 @@ namespace GKToy
 			// 绘制状态标志.
 			if (node.state != NodeState.Inactive)
 			{
-				float tmpSize2 = node.height * Scale * 0.2f;
-				_tmpRect.x = node.pos.x * Scale;
-				_tmpRect.y = node.pos.y * Scale;
+				float tmpSize2 = node.height * Scale * 0.4f;
+				_tmpRect.x = node.pos.x * Scale + 4;
+				_tmpRect.y = node.pos.y * Scale + 4;
 				_tmpRect.width = tmpSize2;
 				_tmpRect.height = tmpSize2;
 				switch (node.state)
@@ -1230,39 +1233,36 @@ namespace GKToy
 		// 加载节点图标.
 		protected void UpdateNodeIcon(GKToyNode node)
 		{
-			if (node.icon == null)
+			string[] paths = GKToyMakerTypeManager.Instance().typeAttributeDict[node.className].treePath.Split('/');
+			string iconPath = GKToyMakerTypeManager.Instance().typeAttributeDict[node.className].iconPath;
+			if (paths.Length > 0)
 			{
-				string[] paths = GKToyMakerTypeManager.Instance().typeAttributeDict[node.className].treePath.Split('/');
-				string iconPath = GKToyMakerTypeManager.Instance().typeAttributeDict[node.className].iconPath;
-				if (paths.Length > 0)
+				switch (paths[0])
 				{
-					switch (paths[0])
-					{
-						case "Action":
-							if (iconPath != "")
-								node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
-							else
-								node.icon = toyMakerBase._actionIcon;
-							break;
-						case "Condition":
-							if (iconPath != "")
-								node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
-							else
-								node.icon = toyMakerBase._conditionIcon;
-							break;
-						case "Decoration":
-							if (iconPath != "")
-								node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
-							else
-								node.icon = toyMakerBase._decorationIcon;
-							break;
-						default:
-							if (iconPath != "")
-								node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
-							else
-								node.icon = toyMakerBase._defaultIcon;
-							break;
-					}
+					case "Action":
+						if (iconPath != "")
+							node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
+						else
+							node.icon = toyMakerBase._actionIcon;
+						break;
+					case "Condition":
+						if (iconPath != "")
+							node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
+						else
+							node.icon = toyMakerBase._conditionIcon;
+						break;
+					case "Decoration":
+						if (iconPath != "")
+							node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
+						else
+							node.icon = toyMakerBase._decorationIcon;
+						break;
+					default:
+						if (iconPath != "")
+							node.icon = AssetDatabase.LoadAssetAtPath(iconPath, typeof(Texture)) as Texture;
+						else
+							node.icon = toyMakerBase._defaultIcon;
+						break;
 				}
 			}
 		}

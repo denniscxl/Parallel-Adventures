@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using GKStateMachine;
 
 namespace GKToy
@@ -54,9 +52,17 @@ namespace GKToy
 			_currentRemovingState.Add(stateId);
 		}
 
-		public void LeaveStates(List<STATE_ID_T> stateIds)
+		public void StopAll()
 		{
-			_currentRemovingState.AddRange(stateIds);
+			_currentRemovingState.Clear();
+			_currentAddingState.Clear();
+			if (0 != _currentState.Count)
+			{
+				foreach (var state in _currentState)
+				{
+					_currentRemovingState.Add(state.ID);
+				}
+			}
 		}
 
 		public void Update()

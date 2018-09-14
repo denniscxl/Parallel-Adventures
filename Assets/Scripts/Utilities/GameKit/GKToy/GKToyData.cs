@@ -50,20 +50,20 @@ namespace GKToy
         // 变量转化为Json存储.
         public void SaveVariable()
         {
-            variableData.Clear();
-            variableTypeData.Clear();
-            foreach (var objs in variableLst)
-            {
-                foreach (var obj in objs.Value)
-                {
-                    variableData.Add(JsonUtility.ToJson(obj));
-                    variableTypeData.Add(objs.Key);
-                }
-            }
 #if UNITY_EDITOR
 			// 设置场景有更新.
 			if (!Application.isPlaying)
 			{
+				variableData.Clear();
+				variableTypeData.Clear();
+				foreach (var objs in variableLst)
+				{
+					foreach (var obj in objs.Value)
+					{
+						variableData.Add(JsonUtility.ToJson(obj));
+						variableTypeData.Add(objs.Key);
+					}
+				}
 				Scene scene = SceneManager.GetActiveScene();
 				EditorSceneManager.MarkSceneDirty(scene);
 			}
@@ -96,17 +96,17 @@ namespace GKToy
 		// 节点转化为Json存储.
 		public void SaveNodes()
 		{
-			nodeTypeData.Clear();
-			List<string> tmpNodeData = new List<string>();
-			foreach (var obj in nodeLst.Values)
-			{
-				tmpNodeData.Add(JsonUtility.ToJson(obj));
-				nodeTypeData.Add(((GKToyNode)obj).className);
-			}
 #if UNITY_EDITOR
 			// 设置场景有更新.
 			if (!Application.isPlaying)
 			{
+				nodeTypeData.Clear();
+				List<string> tmpNodeData = new List<string>();
+				foreach (var obj in nodeLst.Values)
+				{
+					tmpNodeData.Add(JsonUtility.ToJson(obj));
+					nodeTypeData.Add(((GKToyNode)obj).className);
+				}
 				bool isChanged = false;
 				if (tmpNodeData.Count == nodeData.Count)
 				{
@@ -123,9 +123,9 @@ namespace GKToy
 					Scene scene = SceneManager.GetActiveScene();
 					EditorSceneManager.MarkSceneDirty(scene);
 				}
+				nodeData = tmpNodeData;
 			}
 #endif
-			nodeData = tmpNodeData;
 		}
 
 		// Json转化为节点.

@@ -7,35 +7,33 @@ namespace GKToy
 	public class GKToyActioSetColor : GKToyNode
     {
 		[SerializeField]
-		private Renderer m_renderer = new Renderer();
-		static int colorIndex = 0;
-		public Renderer Renderer
+		private Renderer m_renderer;
+		[SerializeField]
+		private GKToySharedColor m_Color = new GKToySharedColor();
+		public GKToySharedColor SetColor
 		{
-			get { return m_renderer; }
-			set { m_renderer = value; }
+			get { return m_Color; }
+			set { m_Color = value; }
 		}
+		//public Renderer Renderer
+		//{
+		//	get { return m_renderer; }
+		//	set { m_renderer = value; }
+		//}
 
-        public GKToyActioSetColor(int _id) : base(_id) { }
+		public GKToyActioSetColor(int _id) : base(_id) { }
+
+		public override void Init(GKToyBaseOverlord ovelord)
+		{
+			base.Init(ovelord);
+			m_renderer = ovelord.gameObject.GetComponentInChildren<Renderer>();
+		}
 
 		public override int Update()
 		{
-			if (m_renderer != null)
+			if (m_renderer != null && m_Color != null)
 			{
-				switch (colorIndex)
-				{
-					case 0:
-						m_renderer.material.color = Color.red;
-						colorIndex = 1;
-						break;
-					case 1:
-						m_renderer.material.color = Color.blue;
-						colorIndex = 2;
-						break;
-					case 2:
-						m_renderer.material.color = Color.yellow;
-						colorIndex = 0;
-						break;
-				}
+				m_renderer.material.color = m_Color.Value;
 			}
 			machine.GoToState(id, links.Select(x => x.next).ToList());
 			state = NodeState.Success;

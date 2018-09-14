@@ -11,7 +11,7 @@ namespace GKToy
 		public override int Update()
 		{
 			List<GKStateMachineStateBase<int>> states =  machine.GetCurrentState();
-			machine.LeaveStates(states.Select(x => x.ID).ToList());
+			machine.StopAll();
 			state = NodeState.Success;
 			return base.Update();
 		}
