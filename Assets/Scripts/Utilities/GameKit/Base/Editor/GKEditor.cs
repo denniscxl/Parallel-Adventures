@@ -57,7 +57,11 @@ namespace GKBase
         {
             TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
             //Texture Type
+#if UNITY_2017_1_OR_NEWER
             textureImporter.textureType = TextureImporterType.Default;
+#else
+            textureImporter.textureType = TextureImporterType.Advanced;
+#endif
             //Non power of2
             textureImporter.npotScale = TextureImporterNPOTScale.None;
             //Mipmap
@@ -663,7 +667,11 @@ namespace GKBase
                     string line = sr.ReadLine();
                     if (line.Contains("guid"))
                     {
+#if UNITY_2017_1_OR_NEWER
                         sb.AppendLine(dstMetaGuid ?? "guid: " + GUID.Generate().ToString());
+#else
+                        sb.AppendLine(dstMetaGuid ?? "guid: " + Guid.NewGuid().ToString());
+#endif
                     }
                     else if (line.Contains("timeCreated"))
                     {

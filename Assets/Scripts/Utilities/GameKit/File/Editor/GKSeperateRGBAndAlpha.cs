@@ -146,9 +146,12 @@ namespace GKFile
             }
             importer.maxTextureSize = Mathf.Max(width, height);
             importer.anisoLevel = 0;
-            importer.isReadable = false;  //increase memory cost if readable is true  
-            importer.textureFormat = TextureImporterFormat.AutomaticCompressed;
+#if UNITY_2017_1_OR_NEWER
             importer.textureType = TextureImporterType.Default;
+#else
+            importer.textureFormat = TextureImporterFormat.AutomaticCompressed;
+            importer.textureType = TextureImporterType.Advanced;
+#endif
             if (path.Contains("/UI/"))
             {
                 importer.textureType = TextureImporterType.GUI;
@@ -189,9 +192,9 @@ namespace GKFile
             return true;
         }
 
-        #endregion
+#endregion
 
-        #region string or path helper    
+#region string or path helper    
 
         static bool IsTextureFile(string _path)
         {
@@ -235,6 +238,6 @@ namespace GKFile
             return _path.Replace("\\", "/");
         }
 
-        #endregion
+#endregion
     }
 }

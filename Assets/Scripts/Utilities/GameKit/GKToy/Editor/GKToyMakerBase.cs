@@ -26,7 +26,7 @@ namespace GKToy
         public Editor_Settings.ToyMakerBase toyMakerBase = null;
         protected GKToyBaseOverlord _overlord;
         protected List<Type> _variableType = new List<Type>();
-        protected string [] _variableTypeNames;
+        protected string[] _variableTypeNames;
         #endregion
 
         #region PrivateField
@@ -37,12 +37,12 @@ namespace GKToy
             get { return _contentSacle; }
             set
             {
-                if(toyMakerBase._minScale > value)
+                if (toyMakerBase._minScale > value)
                 {
                     _contentSacle = toyMakerBase._minScale;
                     return;
                 }
-                if(toyMakerBase._maxScale < value)
+                if (toyMakerBase._maxScale < value)
                 {
                     _contentSacle = toyMakerBase._maxScale;
                     return;
@@ -55,9 +55,9 @@ namespace GKToy
         protected int curNodeIdx
         {
             get { return _curNodeIdx; }
-            set 
+            set
             {
-                if(null != _overlord)
+                if (null != _overlord)
                 {
                     _overlord.data.nodeGuid = value;
                 }
@@ -91,8 +91,8 @@ namespace GKToy
         protected GKToyNode _selectNode = null;
         // 临时节点缓存.
         protected GKToyNode _tmpSelectNode = null;
-		// 当前选中Link的Id.
-		protected Link _selectLink = null;
+        // 当前选中Link的Id.
+        protected Link _selectLink = null;
         // 点击到的元素.
         protected ClickedElement _clickedElement = ClickedElement.NodeElement;
         // 视口区域.
@@ -105,42 +105,42 @@ namespace GKToy
         protected Vector2 _mouseOffset = Vector2.zero;
         // 链接变更列表.
         // !!!逻辑渲染分离, 等渲染完毕后再进行逻辑处理, 规避渲染时变更渲染内容所产生的异常.
-        protected Dictionary <int, List<GKToyNode>> _newLinkLst = new Dictionary<int, List<GKToyNode>>();
+        protected Dictionary<int, List<GKToyNode>> _newLinkLst = new Dictionary<int, List<GKToyNode>>();
         protected Dictionary<int, List<GKToyNode>> _removeLinkLst = new Dictionary<int, List<GKToyNode>>();
         // GUI 数据备份.
         protected Color _lastColor;
         protected Color _lastBgColor;
-		// 节点种类树根节点.
-		private static TreeNode root = null;
+        // 节点种类树根节点.
+        private static TreeNode root = null;
         // 临时变量编辑缓存.
         protected string _newVariableName = "";
         protected int _newVariableIdx = 0;
         protected Dictionary<string, List<object>> _addVariableLst = new Dictionary<string, List<object>>();
         protected Dictionary<string, List<object>> _delVariableLst = new Dictionary<string, List<object>>();
-		#endregion
+        #endregion
 
-		#region PublicMethod
-		[MenuItem("GK/ToyMaker/Toy Maker Base", false, GKEditorConfiger.MenuItemPriorityA)]
+        #region PublicMethod
+        [MenuItem("GK/ToyMaker/Toy Maker Base", false, GKEditorConfiger.MenuItemPriorityA)]
         public static void MenuItem_Window()
         {
             instance = GetWindow<GKToyMakerBase>("Logic Maker", false);
         }
-		#endregion
+        #endregion
 
-		private void OnEnable()
+        private void OnEnable()
         {
-			if(null == instance)
-			{
-				instance = this;
-				Init();
-				wantsMouseMove = true;
-				minSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
-				maxSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
-				Show();
-			}
+            if (null == instance)
+            {
+                instance = this;
+                Init();
+                wantsMouseMove = true;
+                minSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
+                maxSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
+                Show();
+            }
         }
 
-		private void OnGUI()
+        private void OnGUI()
         {
             EventProcess();
             Render();
@@ -157,31 +157,31 @@ namespace GKToy
             UpdateLinks();
         }
 
-		private void OnDestroy()
-		{
-			_overlord.data.SaveNodes();
-			instance = null;
-		}
+        private void OnDestroy()
+        {
+            _overlord.data.SaveNodes();
+            instance = null;
+        }
 
-		private void Render()
-		{
-            if(null == _overlord)
+        private void Render()
+        {
+            if (null == _overlord)
             {
-                
+
                 GUILayout.BeginArea(_nonContentRect);
                 {
                     GUILayout.BeginVertical("Box");
                     {
-                            GUILayout.Label("Create a new task or select a record.");
-                            if (GUILayout.Button("Create", GUILayout.Width(200), GUILayout.Height(30)))
-                            {
-                                CreateData();
-                            }
+                        GUILayout.Label("Create a new task or select a record.");
+                        if (GUILayout.Button("Create", GUILayout.Width(200), GUILayout.Height(30)))
+                        {
+                            CreateData();
+                        }
                     }
                     GUILayout.EndVertical();
                 }
                 GUILayout.EndArea();
-                
+
             }
             else
             {
@@ -197,9 +197,9 @@ namespace GKToy
                 }
                 GUILayout.EndHorizontal();
             }
-		}
+        }
 
-		#region Event
+        #region Event
         // 按键响应.
         private void EventProcess()
         {
@@ -212,7 +212,11 @@ namespace GKToy
                 _tmpScalePos = _contentScrollPos;
 
             // Zoom in or out.
+#if UNITY_2017_1_OR_NEWER
             if (Event.current.alt && Event.current.isScrollWheel)
+#else
+            if (Event.current.alt)
+#endif
             {
                 if (Event.current.delta.y < 0)
                 {
@@ -270,7 +274,7 @@ namespace GKToy
                 return false;
 
             Vector2 mousePos = Event.current.mousePosition + _contentScrollPos;
-			foreach (GKToyNode node in _overlord.data.nodeLst.Values)
+            foreach (GKToyNode node in _overlord.data.nodeLst.Values)
             {
                 if (node.inputRect.Contains(mousePos))
                 {
@@ -296,47 +300,47 @@ namespace GKToy
             return false;
         }
 
-		// 链接线段点选检测.
-		private bool UpdateLinkTouch()
-		{
+        // 链接线段点选检测.
+        private bool UpdateLinkTouch()
+        {
             if (0 == _overlord.data.nodeLst.Count)
-				return false;
+                return false;
             foreach (GKToyNode node in _overlord.data.nodeLst.Values)
-			{
-				var links = node.links;
-				if (0 == links.Count)
-					continue;
+            {
+                var links = node.links;
+                if (0 == links.Count)
+                    continue;
 
-				foreach (Link link in links)
-				{
-					for (int i = 0; i < link.points.Count - 1; ++i)
-					{
-						bool isVertical = 0 == (i & 1) ^ link.isFirstVertical;
+                foreach (Link link in links)
+                {
+                    for (int i = 0; i < link.points.Count - 1; ++i)
+                    {
+                        bool isVertical = 0 == (i & 1) ^ link.isFirstVertical;
 
-						Rect lineRect;
-						float x = Mathf.Min(link.points[i].x, link.points[i + 1].x) - toyMakerBase.linkClickOffset;
-						float y = Mathf.Min(link.points[i].y, link.points[i + 1].y) - toyMakerBase.linkClickOffset;
-						if (isVertical)
-						{
-							lineRect = new Rect(x, y, toyMakerBase.linkClickOffset * 2, Mathf.Abs(link.points[i].y - link.points[i + 1].y));
-						}
-						else
-						{
-							lineRect = new Rect(x, y, Mathf.Abs(link.points[i].x - link.points[i + 1].x), toyMakerBase.linkClickOffset * 2);
-						}
-						if (lineRect.Contains(Event.current.mousePosition))
-						{
-							_selectLink = link;
+                        Rect lineRect;
+                        float x = Mathf.Min(link.points[i].x, link.points[i + 1].x) - toyMakerBase.linkClickOffset;
+                        float y = Mathf.Min(link.points[i].y, link.points[i + 1].y) - toyMakerBase.linkClickOffset;
+                        if (isVertical)
+                        {
+                            lineRect = new Rect(x, y, toyMakerBase.linkClickOffset * 2, Mathf.Abs(link.points[i].y - link.points[i + 1].y));
+                        }
+                        else
+                        {
+                            lineRect = new Rect(x, y, Mathf.Abs(link.points[i].x - link.points[i + 1].x), toyMakerBase.linkClickOffset * 2);
+                        }
+                        if (lineRect.Contains(Event.current.mousePosition))
+                        {
+                            _selectLink = link;
                             _tmpSelectNode = node;
-							_clickedElement = ClickedElement.LinkElement;
-							// 如果是选中的连接，则跳过最后再画，否则高亮色会被遮住.
-							return true;
-						}
-					}
-				}
-			}
+                            _clickedElement = ClickedElement.LinkElement;
+                            // 如果是选中的连接，则跳过最后再画，否则高亮色会被遮住.
+                            return true;
+                        }
+                    }
+                }
+            }
             return false;
-		}
+        }
 
         // 检测是否链接。
         private void CheckLink()
@@ -344,7 +348,7 @@ namespace GKToy
             if (null == Event.current && null == _selectNode)
                 return;
             Vector2 mousePos = Event.current.mousePosition + _contentScrollPos;
-			foreach (GKToyNode node in _overlord.data.nodeLst.Values)
+            foreach (GKToyNode node in _overlord.data.nodeLst.Values)
             {
                 if (node.id == _selectNode.id)
                     continue;
@@ -359,20 +363,20 @@ namespace GKToy
                 }
             }
         }
-		#endregion
+        #endregion
 
-		#region Information
-		// 绘制信息界面.
-		private void DrawInformation()
+        #region Information
+        // 绘制信息界面.
+        private void DrawInformation()
         {
-            GUILayout.BeginVertical("Box",GUILayout.Width(toyMakerBase._informationWidth), GUILayout.ExpandHeight(true));
+            GUILayout.BeginVertical("Box", GUILayout.Width(toyMakerBase._informationWidth), GUILayout.ExpandHeight(true));
             {
                 // 绘制Tab.
                 GUILayout.BeginHorizontal();
                 {
-                    foreach(var type in GK.EnumValues<InformationType>()) 
+                    foreach (var type in GK.EnumValues<InformationType>())
                     {
-                        if ( GUILayout.Toggle(type == _infoType, type.ToString(), EditorStyles.toolbarButton, GUILayout.Height(toyMakerBase._lineHeight)))
+                        if (GUILayout.Toggle(type == _infoType, type.ToString(), EditorStyles.toolbarButton, GUILayout.Height(toyMakerBase._lineHeight)))
                         {
                             _infoType = type;
                         }
@@ -454,8 +458,8 @@ namespace GKToy
                 DrawBlackGroundGrid();
                 DrawLinks();
 
-				// 绘制行为节点.
-				foreach (GKToyNode node in _overlord.data.nodeLst.Values)
+                // 绘制行为节点.
+                foreach (GKToyNode node in _overlord.data.nodeLst.Values)
                 {
                     DrawNode(node, Scale, _isDrag, _mouseOffset, _selectNode);
                     if (_isDrag)
@@ -533,7 +537,7 @@ namespace GKToy
                 _overlord.data.variableChanged = true;
                 foreach (var v in _addVariableLst)
                 {
-                    foreach(var obj in v.Value)
+                    foreach (var obj in v.Value)
                     {
                         if (_overlord.data.variableLst.ContainsKey(v.Key))
                         {
@@ -563,7 +567,7 @@ namespace GKToy
                 _delVariableLst.Clear();
             }
 
-            if(_overlord.data.variableChanged)
+            if (_overlord.data.variableChanged)
             {
                 _overlord.data.variableChanged = false;
                 _overlord.data.SaveVariable();
@@ -577,7 +581,7 @@ namespace GKToy
                     foreach (var l in link.Value)
                     {
                         GKToyNode n = (GKToyNode)_overlord.data.nodeLst[link.Key];
-                        if(null != n)
+                        if (null != n)
                             n.AddLink(curLinkIdx++, l);
                     }
 
@@ -612,26 +616,26 @@ namespace GKToy
         {
             if (_isDrag && !_isLinking && null != _selectNode)
             {
-				foreach(Link l in _selectNode.links)
-				{
-					_selectNode.UpdateLink(l, (GKToyNode)_overlord.data.nodeLst[l.next]);
-				}
+                foreach (Link l in _selectNode.links)
+                {
+                    _selectNode.UpdateLink(l, (GKToyNode)_overlord.data.nodeLst[l.next]);
+                }
                 foreach (GKToyNode node in _overlord.data.nodeLst.Values)
                 {
                     Link l = node.FindLinkFromNode(_selectNode.id);
-					if (null != l)
-						node.UpdateLink(l, (GKToyNode)_overlord.data.nodeLst[l.next]);
+                    if (null != l)
+                        node.UpdateLink(l, (GKToyNode)_overlord.data.nodeLst[l.next]);
                 }
             }
             else if (_isScale)
             {
                 foreach (GKToyNode node in _overlord.data.nodeLst.Values)
                 {
-					foreach (Link l in node.links)
-					{
-						node.UpdateLink(l, (GKToyNode)_overlord.data.nodeLst[l.next]);
-					}
-				}
+                    foreach (Link l in node.links)
+                    {
+                        node.UpdateLink(l, (GKToyNode)_overlord.data.nodeLst[l.next]);
+                    }
+                }
             }
         }
         #endregion
@@ -655,28 +659,32 @@ namespace GKToy
         // 绘制节点列表.
         virtual protected void DrawTasks()
         {
-			if (root != null)
-			{
-				GUILayout.BeginVertical();
-				DrawTypeTree(root, 0, 0);
-				GUILayout.EndVertical();
-			}
+            if (root != null)
+            {
+                GUILayout.BeginVertical();
+                DrawTypeTree(root, 0, 0);
+                GUILayout.EndVertical();
+            }
         }
-		private void DrawTypeTree(TreeNode node, int level, int treeIndex)
-		{
-			if (node == null)
-			{
-				return;
-			}
-			if (level != 0)
-			{
-				treeIndex++;
-				if (node.nodeType == TreeNode.TreeNodeType.Switch)
-				{
-					EditorGUILayout.BeginHorizontal();
-					GUILayout.Space(10 * (level - 1));
-					node.isOpen = EditorGUILayout.Foldout(node.isOpen, node.name, true);
-					EditorGUILayout.EndHorizontal();
+        private void DrawTypeTree(TreeNode node, int level, int treeIndex)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            if (level != 0)
+            {
+                treeIndex++;
+                if (node.nodeType == TreeNode.TreeNodeType.Switch)
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    GUILayout.Space(10 * (level - 1));
+#if UNITY_2017_1_OR_NEWER
+                    node.isOpen = EditorGUILayout.Foldout(node.isOpen, node.name, true);
+#else
+                    node.isOpen = EditorGUILayout.Foldout(node.isOpen, node.name);
+#endif
+                    EditorGUILayout.EndHorizontal();
 				}
 				else
 				{
@@ -701,9 +709,9 @@ namespace GKToy
 				DrawTypeTree(node.children[i], level + 1, treeIndex);
 			}
 		}
-        #endregion
+#endregion
 
-        #region Variables
+#region Variables
         // 绘制节点列表.
         virtual protected void DrawVariables()
         {
@@ -817,9 +825,9 @@ namespace GKToy
             }
             return false;
         }
-        #endregion
+#endregion
 
-        #region Content
+#region Content
 
         //------------------------------ Link ------------------------------
 
@@ -1144,9 +1152,9 @@ namespace GKToy
             }
             GUILayout.EndHorizontal();
         }
-		#endregion
+#endregion
 
-		#region ContentMenu
+#region ContentMenu
 		//判断鼠标右键事件.
 		protected void DrawMenu(Rect rect)
         {
@@ -1293,9 +1301,9 @@ namespace GKToy
             _removeLinkLst[id].Add(node);
             _selectLink = null;
         }
-        #endregion
+#endregion
 
-        #region Other
+#region Other
         // 初始化.
         // 初始化数据必须需要再Enable中执行.
         protected void Init()
@@ -1350,16 +1358,17 @@ namespace GKToy
         // 序列化点选对象变更.
         protected void SelectChanged()
         {
-            var assets = Selection.GetFiltered<GKToyBaseOverlord>(SelectionMode.Assets);
+
+            var assets = Selection.GetFiltered(typeof(GKToyBaseOverlord), SelectionMode.Assets);
             if (0 == assets.Length)
                 return;
 
             if(null == _overlord)
-                ResetSelected(assets[0]);
+                ResetSelected((GKToyBaseOverlord)assets[0]);
 
             if(assets[0] != _overlord)
             {
-                ResetSelected(assets[0]);
+                ResetSelected((GKToyBaseOverlord)assets[0]);
             }
 
             _isScale = true;
@@ -1421,7 +1430,7 @@ namespace GKToy
 					ResetSelected(assets[0]);
 			}
 		}
-        #endregion
+#endregion
 
         public enum InformationType
         {
