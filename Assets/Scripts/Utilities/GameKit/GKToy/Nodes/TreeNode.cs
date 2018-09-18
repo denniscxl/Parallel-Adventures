@@ -55,7 +55,7 @@ public class TreeNode {
 	public TreeNode GenerateFileTree(Dictionary<string, NodeTypeTreeAttribute> data)
 	{
 		TreeNode root = new TreeNode ();
-		Dictionary<string, string> pathData = data.ToDictionary(x => string.Format("Root/{0}", x.Value.treePath), x => x.Key);
+		Dictionary<string, string> pathData = data.Where(x => x.Value.isVisible).ToDictionary(x => string.Format("Root/{0}", x.Value.treePath), x => x.Key);
 		root = GenerateFileNode ("", "Root/", pathData);
 		OpenAllNode (root);
 		return root;

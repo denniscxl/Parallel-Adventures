@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace GKToy
 {
-	[NodeTypeTree("Action/Input/SetTranslate")]
+	[NodeTypeTree("Action/Input/Set Translate")]
 	public class GKToyActioSetTranslate : GKToyNode
     {
 		[SerializeField]
@@ -37,7 +37,6 @@ namespace GKToy
 					m_transform.Translate(-Vector3.right * Time.deltaTime * m_Speed.Value);
 			}
 			machine.GoToState(id, links.Select(x => x.next).ToList());
-			state = NodeState.Success;
 			return base.Update();
 		}
 	}

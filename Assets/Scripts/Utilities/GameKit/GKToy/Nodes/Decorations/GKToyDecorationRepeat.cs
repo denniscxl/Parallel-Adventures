@@ -10,7 +10,6 @@ namespace GKToy
 		public override int Update()
 		{
 			machine.GoToState(id, links.Select(x => x.next).ToList());
-			state = NodeState.Success;
 			return base.Update();
 		}
 	}

@@ -29,7 +29,6 @@ namespace GKToy
             if (curTime >= (float)m_WaitTime.GetValue())
 			{
 				machine.GoToState(id, links.Select(x => x.next).ToList());
-				state = NodeState.Success;
 			}
 			return base.Update();
 		}

@@ -3,14 +3,15 @@ using System.Linq;
 
 namespace GKToy
 {
-	[NodeTypeTree("Action/Physics/CheckRaycast")]
-	public class GKToyActionCheckRaycast : GKToyNode
+	[NodeTypeTree("Action/Physics/Hit Checker")]
+	public class GKToyActionHitChecker : GKToyNode
 	{
 		private Transform m_Trans;
 		[SerializeField]
 		private GKToySharedFloat m_MaxDistance = new GKToySharedFloat();
 		[SerializeField]
 		private GKToySharedVector3 m_Direction = new GKToySharedVector3();
+		private bool isSuccess = true;
 		public GKToySharedFloat MaxDistance
 		{
 			get { return m_MaxDistance; }
@@ -22,7 +23,7 @@ namespace GKToy
 			set { m_Direction = value; }
 		}
 
-		public GKToyActionCheckRaycast(int _id) : base(_id) { }
+		public GKToyActionHitChecker(int _id) : base(_id) { }
 
 		public override void Init(GKToyBaseOverlord ovelord)
 		{
@@ -36,14 +37,22 @@ namespace GKToy
 			if (Physics.Raycast(m_Trans.position, m_Direction.Value, out hit, m_MaxDistance.Value))
 			{
 				machine.GoToState(id, links.Select(x => x.next).ToList());
-				state = NodeState.Success;
 			}
 			else
 			{
 				machine.LeaveState(id);
-				state = NodeState.Fail;
+				isSuccess = false;
 			}
 			return base.Update();
+		}
+
+		public override void Exit()
+		{
+			if (isSuccess)
+				state = NodeState.Success;
+			else
+				state = NodeState.Fail;
+			base.Exit();
 		}
 	}
 }

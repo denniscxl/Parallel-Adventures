@@ -10,9 +10,8 @@ namespace GKToy
 		public GKToyActionEnd(int _id) : base(_id) { }
 		public override int Update()
 		{
-			List<GKStateMachineStateBase<int>> states =  machine.GetCurrentState();
 			machine.StopAll();
-			state = NodeState.Success;
+			machine.LeaveState(id);
 			return base.Update();
 		}
 	}

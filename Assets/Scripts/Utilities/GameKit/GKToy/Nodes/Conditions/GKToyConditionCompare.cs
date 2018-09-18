@@ -16,6 +16,7 @@ namespace GKToy
         string m_TargetValue = string.Empty;
 		[SerializeField]
 		CompareType m_CompareType = CompareType.LessThan;
+		private bool isSuccess = true;
 
 		IComparable value1, value2;
 
@@ -79,14 +80,22 @@ namespace GKToy
 			if (res)
 			{
 				machine.GoToState(id, links.Select(x => x.next).ToList());
-				state = NodeState.Success;
 			}
 			else
 			{
 				machine.LeaveState(id);
-				state = NodeState.Fail;
+				isSuccess = false;
 			}
 			return base.Update();
+		}
+
+		public override void Exit()
+		{
+			if (isSuccess)
+				state = NodeState.Success;
+			else
+				state = NodeState.Fail;
+			base.Exit();
 		}
 
 		private bool IsLessThan()

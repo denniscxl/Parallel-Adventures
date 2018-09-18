@@ -2,7 +2,7 @@
 
 namespace GKToy
 {
-	[NodeTypeTree("Action/Base/Start")]
+	[NodeTypeTree("Action/Base/Start", "", false)]
     public class GKToyActionStart : GKToyNode
     {
 
@@ -11,7 +11,6 @@ namespace GKToy
 		public override int Update()
 		{
 			machine.GoToState(id, links.Select(x => x.next).ToList());
-			state = NodeState.Success;
 			return base.Update();
 		}
 	}

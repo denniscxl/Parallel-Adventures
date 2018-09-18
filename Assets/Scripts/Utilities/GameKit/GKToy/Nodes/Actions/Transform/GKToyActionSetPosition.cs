@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace GKToy
 {
-	[NodeTypeTree("Action/Input/SetPosition")]
+	[NodeTypeTree("Action/Transform/Set Position")]
 	public class GKToyActioSetPosition : GKToyNode
     {
 		[SerializeField]
@@ -30,7 +30,6 @@ namespace GKToy
 				m_transform.position = m_Position.Value;
 			}
 			machine.GoToState(id, links.Select(x => x.next).ToList());
-			state = NodeState.Success;
 			return base.Update();
 		}
 	}

@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace GKToy
 {
-    [NodeTypeTree("Action/Math/DoubleValueCalc")]
-	public class GKToyActionTwoValueCalc : GKToyNode
+    [NodeTypeTree("Action/Math/Calculator")]
+	public class GKToyActionCalculator : GKToyNode
 	{
 		[SerializeField]
 		float m_InputValue1 = 0;
@@ -36,7 +36,7 @@ namespace GKToy
 			set { m_CalcType = value; }
 		}
 
-		public GKToyActionTwoValueCalc(int _id) : base(_id) { }
+		public GKToyActionCalculator(int _id) : base(_id) { }
 
 		public override int Update()
 		{
@@ -59,7 +59,6 @@ namespace GKToy
 					break;
 			}
 			machine.GoToState(id, links.Select(x => x.next).ToList());
-			state = NodeState.Success;
 			return base.Update();
 		}
 

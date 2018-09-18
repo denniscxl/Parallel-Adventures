@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace GKToy
 {
-    [NodeTypeTree("Action/Color/SetColor")]
+    [NodeTypeTree("Action/Color/Set Color")]
 	public class GKToyActioSetColor : GKToyNode
     {
 		[SerializeField]
@@ -36,7 +36,6 @@ namespace GKToy
 				m_renderer.material.color = m_Color.Value;
 			}
 			machine.GoToState(id, links.Select(x => x.next).ToList());
-			state = NodeState.Success;
 			return base.Update();
 		}
 	}

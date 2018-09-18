@@ -4,6 +4,7 @@ using UnityEditor;
 using GKBase;
 using System;
 using System.Reflection;
+using System.Linq;
 
 namespace GKToy
 {
@@ -129,15 +130,15 @@ namespace GKToy
 
         private void OnEnable()
         {
-            if (null == instance)
-            {
-                instance = this;
-                Init();
-                wantsMouseMove = true;
-                minSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
-                maxSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
-                Show();
-            }
+			if(null == instance)
+			{
+				instance = this;
+				Init();
+				wantsMouseMove = true;
+				minSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
+				maxSize = new Vector2(toyMakerBase._minWidth, toyMakerBase._minHeight);
+				instance.Show();
+			}
         }
 
         private void OnGUI()
@@ -168,36 +169,39 @@ namespace GKToy
             if (null == _overlord)
             {
 
-                GUILayout.BeginArea(_nonContentRect);
-                {
-                    GUILayout.BeginVertical("Box");
-                    {
-                        GUILayout.Label("Create a new task or select a record.");
-                        if (GUILayout.Button("Create", GUILayout.Width(200), GUILayout.Height(30)))
-                        {
-                            CreateData();
-                        }
-                    }
-                    GUILayout.EndVertical();
-                }
-                GUILayout.EndArea();
-
-            }
-            else
-            {
-                GUILayout.BeginHorizontal();
-                {
-                    DrawInformation();
-                    GUILayout.BeginVertical("Box", GUILayout.ExpandHeight(true));
-                    {
-                        DrawToolBar();
-                        DrawContent();
-                    }
-                    GUILayout.EndVertical();
-                }
-                GUILayout.EndHorizontal();
-            }
-        }
+				GUILayout.BeginArea(_nonContentRect);
+				{
+					GUILayout.BeginVertical("Box");
+					{
+						GUILayout.Label("Create a new task or select a record.");
+						if (GUILayout.Button("Create", GUILayout.Width(200), GUILayout.Height(30)))
+						{
+							CreateData();
+						}
+					}
+					GUILayout.EndVertical();
+				}
+				GUILayout.EndArea();
+			}
+			else
+			{
+				GUILayout.BeginHorizontal();
+				{
+					DrawInformation();
+					GUILayout.BeginVertical("Box", GUILayout.ExpandHeight(true));
+					{
+						DrawToolBar();
+						DrawContent();
+					}
+					GUILayout.EndVertical();
+				}
+				GUILayout.EndHorizontal();
+			}
+			if (null != _tmpSelectNode)
+			{
+				GUI.FocusControl(null);
+			}
+		}
 
         #region Event
         // 按键响应.
@@ -272,9 +276,10 @@ namespace GKToy
             // 链接时不可点击.
             if (_isLinking)
                 return false;
-
-            Vector2 mousePos = Event.current.mousePosition + _contentScrollPos;
-            foreach (GKToyNode node in _overlord.data.nodeLst.Values)
+			if (!_contentRect.Contains(Event.current.mousePosition))
+				return false;
+			Vector2 mousePos = Event.current.mousePosition + _contentScrollPos;
+			foreach (GKToyNode node in _overlord.data.nodeLst.Values)
             {
                 if (node.inputRect.Contains(mousePos))
                 {
@@ -1165,7 +1170,7 @@ namespace GKToy
                 switch (_clickedElement)
                 {
                     case ClickedElement.NoElement:
-						foreach (var item in GKToyMakerTypeManager.Instance().typeAttributeDict)
+						foreach (var item in GKToyMakerTypeManager.Instance().typeAttributeDict.Where(x => x.Value.isVisible))
 						{
 							menu.AddItem(new GUIContent(item.Value.treePath), false, HandleMenuAddNode, new object[]{ Event.current.mousePosition, item.Key });
 						}
@@ -1290,7 +1295,12 @@ namespace GKToy
             _overlord.data.nodeLst.Clear();
             _selectNode = null;
             _selectLink = null;
-        }
+			GKToyNode node = new GKToyActionStart(curNodeIdx);
+			node.className = "GKToy." + node.GetType().Name;
+			node.pos.x = (_contentScrollPos.x + toyMakerBase._minWidth * 0.5f) / Scale;
+			node.pos.y = (_contentScrollPos.y + toyMakerBase._minHeight * 0.5f) / Scale;
+			CreateNode(node);
+		}
 
         // 删除链接.
         protected void RemoveLink(int id, GKToyNode node)
@@ -1310,9 +1320,14 @@ namespace GKToy
         {
             if (null != _overlord)
             {
+				_overlord = null;
                 ResetSelected(_overlord);
 			}
+#if UNITY_2017_2_OR_NEWER
 			EditorApplication.playModeStateChanged += SaveDataWhenPlayModeChange;
+#else
+			EditorApplication.playmodeStateChanged += SaveDataWhenPlayModeChange;
+#endif
 			// 数据备份.
 			_lastColor = GUI.color; ;
             _lastBgColor = GUI.backgroundColor;
@@ -1408,9 +1423,14 @@ namespace GKToy
         {
             GameObject go = new GameObject();
             var tmpOverload = GK.GetOrAddComponent<GKToyBaseOverlord>(go);
-            _overlord = tmpOverload;
+			_overlord = tmpOverload;
+			GKToyNode node = new GKToyActionStart(curNodeIdx);
+			node.className = "GKToy." + node.GetType().Name;
+			node.pos.x = (_contentScrollPos.x + toyMakerBase._minWidth * 0.5f) / Scale;
+			node.pos.y = (_contentScrollPos.y + toyMakerBase._minHeight * 0.5f) / Scale;
+			CreateNode(node);
         }
-
+#if UNITY_2017_2_OR_NEWER
 		private void SaveDataWhenPlayModeChange(PlayModeStateChange state)
 		{
 			if (state == PlayModeStateChange.ExitingEditMode)
@@ -1423,13 +1443,31 @@ namespace GKToy
 			else if (state == PlayModeStateChange.EnteredPlayMode || state == PlayModeStateChange.EnteredEditMode)
 			{
 				instance = this;
-				var assets = Selection.GetFiltered<GKToyBaseOverlord>(SelectionMode.Assets);
+				var assets = Selection.GetFiltered(typeof(GKToyBaseOverlord), SelectionMode.Assets);
 				if (0 == assets.Length)
 					return;
 				else
-					ResetSelected(assets[0]);
+					ResetSelected((GKToyBaseOverlord)assets[0]);
 			}
 		}
+#else
+		private void SaveDataWhenPlayModeChange()
+		{
+			if (!EditorApplication.isPlaying && _overlord != null)
+			{
+				_overlord.data.SaveNodes();
+			}
+			else
+			{
+				instance = this;
+				var assets = Selection.GetFiltered(typeof(GKToyBaseOverlord), SelectionMode.Assets);
+				if (0 == assets.Length)
+					return;
+				else
+					ResetSelected((GKToyBaseOverlord)assets[0]);
+			}
+		}
+#endif
 #endregion
 
         public enum InformationType

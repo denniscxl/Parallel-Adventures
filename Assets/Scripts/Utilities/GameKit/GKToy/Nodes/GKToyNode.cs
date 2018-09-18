@@ -157,6 +157,8 @@ namespace GKToy
 
 		public override void Exit()
 		{
+			if(state == NodeState.Activated)
+				state = NodeState.Success;
 			Debug.Log("Exit " + name);
 		}
 		#endregion

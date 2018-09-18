@@ -42,11 +42,13 @@ namespace GKToy
 	{
 		public string treePath;
 		public string iconPath;
+		public bool isVisible;
 
-		public NodeTypeTreeAttribute(string _treePath, string _iconPath = "")
+		public NodeTypeTreeAttribute(string _treePath, string _iconPath = "", bool _isVisible = true)
 		{
 			treePath = _treePath;
 			iconPath = _iconPath;
+			isVisible = _isVisible;
 		}
 	}
 }

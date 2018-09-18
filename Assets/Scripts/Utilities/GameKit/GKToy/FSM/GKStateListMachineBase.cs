@@ -56,13 +56,6 @@ namespace GKToy
 		{
 			_currentRemovingState.Clear();
 			_currentAddingState.Clear();
-			if (0 != _currentState.Count)
-			{
-				foreach (var state in _currentState)
-				{
-					_currentRemovingState.Add(state.ID);
-				}
-			}
 		}
 
 		public void Update()

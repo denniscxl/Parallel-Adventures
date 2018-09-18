@@ -64,8 +64,17 @@ namespace GKToy
 						variableTypeData.Add(objs.Key);
 					}
 				}
-				Scene scene = SceneManager.GetActiveScene();
-				EditorSceneManager.MarkSceneDirty(scene);
+				if (_overlord.gameObject.scene.name == null)
+				{
+					// prefab
+					EditorUtility.SetDirty(_overlord.gameObject);
+				}
+				else
+				{
+					// scene gameobject
+					UnityEngine.SceneManagement.Scene scene = SceneManager.GetActiveScene();
+					EditorSceneManager.MarkSceneDirty(scene);
+				}
 			}
 #endif
 		}
@@ -120,8 +129,16 @@ namespace GKToy
 					isChanged = true;
 				if (isChanged)
 				{
-					Scene scene = SceneManager.GetActiveScene();
-					EditorSceneManager.MarkSceneDirty(scene);
+					if (_overlord.gameObject.scene.name == null)
+					{
+						EditorUtility.SetDirty(_overlord.gameObject);
+					}
+					else
+					{
+						UnityEngine.SceneManagement.Scene scene = SceneManager.GetActiveScene();
+						EditorSceneManager.MarkSceneDirty(scene);
+					}
+					
 				}
 				nodeData = tmpNodeData;
 			}
