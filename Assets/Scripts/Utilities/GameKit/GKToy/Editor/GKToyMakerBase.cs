@@ -1188,6 +1188,7 @@ namespace GKToy
             if (Event.current.type == EventType.ContextClick && rect.Contains(Event.current.mousePosition))
             {
                 GenericMenu menu = new GenericMenu();
+                var _tSelectNode = (null == _tmpSelectNode) ? _selectNode : _tmpSelectNode;
                 switch (_clickedElement)
                 {
                     case ClickedElement.NoElement:
@@ -1200,11 +1201,11 @@ namespace GKToy
 						break;
                     case ClickedElement.NodeElement:
 						// 不可自建的节点不可删除.
-						if (GKToyMakerTypeManager.Instance().typeAttributeDict[_selectNode.className].isVisible)
-							menu.AddItem(new GUIContent(string.Format("Delete Node: {0}", _selectNode.name)), false, HandleMenuDeleteNode);
+						if (GKToyMakerTypeManager.Instance().typeAttributeDict[_tSelectNode.className].isVisible)
+							menu.AddItem(new GUIContent(string.Format("Delete Node: {0}", _tSelectNode.name)), false, HandleMenuDeleteNode);
 						break;
                     case ClickedElement.LinkElement:
-                        menu.AddItem(new GUIContent(string.Format("Delete Link: {0} -> {1}", _selectNode.name, ((GKToyNode)_overlord.data.nodeLst[_selectLink.next]).name)), false, HandleMenuDeleteLink);
+                        menu.AddItem(new GUIContent(string.Format("Delete Link: {0} -> {1}", _tSelectNode.name, ((GKToyNode)_overlord.data.nodeLst[_selectLink.next]).name)), false, HandleMenuDeleteLink);
                         break;
                 }
                 menu.ShowAsContext();
