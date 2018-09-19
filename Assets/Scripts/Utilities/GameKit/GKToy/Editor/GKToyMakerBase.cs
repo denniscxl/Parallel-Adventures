@@ -245,8 +245,8 @@ namespace GKToy
                     if (0 == Event.current.button)
                     {
                         _isDrag = true;
+                        UpdateTouch();
                     }
-                    UpdateTouch();
 					break;
                 //case EventType.MouseDrag:
                 //break;
@@ -298,6 +298,7 @@ namespace GKToy
                 }
                 else if (node.rect.Contains(mousePos))
                 {
+                    Debug.Log("2131231");
                     _clickedElement = ClickedElement.NodeElement;
                     _tmpSelectNode = node;
                     _tmpSelectNode.isMove = true;
