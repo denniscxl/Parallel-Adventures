@@ -2,7 +2,7 @@
 using GKBase;
 using GKController;
 
-public class MyGamePreload : GamePreload {
+public class MyGamePreload : GKGamePreload {
 
     public static MyGamePreload Instance = null;
 

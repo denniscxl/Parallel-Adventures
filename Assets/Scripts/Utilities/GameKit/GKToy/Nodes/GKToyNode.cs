@@ -119,21 +119,11 @@ namespace GKToy
                 links.Remove(link);
         }
 
-        /// <summary>
-        /// 返回连接某个节点的连接Id
-        /// </summary>
-        /// <param name="node">被连接的节点</param>
-        /// <returns>连接Id</returns>
-        public int FindLinkIdFromNode(int nodeId)
-        {
-            var res = links.Where(x => x.next == nodeId).FirstOrDefault();
-            if (!default(KeyValuePair<int, Link>).Equals(res))
-            {
-                return res.id;
-            }
-            return -1;
-        }
-
+		/// <summary>
+		/// 返回连接到某个节点的连接
+		/// </summary>
+		/// <param name="nodeId">被连接的节点id</param>
+		/// <returns></returns>
         public Link FindLinkFromNode(int nodeId)
         {
             var res = links.Where(x => x.next == nodeId).FirstOrDefault();

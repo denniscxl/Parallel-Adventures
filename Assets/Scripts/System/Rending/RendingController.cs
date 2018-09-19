@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using GKBase;
+﻿using GKBase;
 using GKData;
 
 public class RendingController : GKSingleton<RendingController>  

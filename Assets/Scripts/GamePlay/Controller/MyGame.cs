@@ -10,22 +10,6 @@ using GKUI;
 public class MyGame : SingletonGame<MyGame> {
 
 	#region Data
-	static protected UIController _UIController;
-	static public UIController UIController
-	{
-		get
-		{
-			if (_UIController == null)
-			{
-				if (null != UIController.instance)
-					_UIController = UIController.instance;
-				else
-					_UIController = GK.GetOrAddComponent<UIController>(GK.TryLoadGameObject("Prefabs/Manager/UIController"));
-			}
-			return _UIController;
-		}
-	}
-
     static protected bl_HUDText _HUDText;
     static public bl_HUDText HUDText
     {
@@ -77,7 +61,7 @@ public class MyGame : SingletonGame<MyGame> {
 	public override void InitRoot()
 	{
 		base.InitRoot ();
-		GK.SetParent(UIController.gameObject, gameObject, false);
+        GK.SetParent(UIController.instance.gameObject, gameObject, false);
 	}
 
 	public void Quit()

@@ -1068,24 +1068,16 @@ namespace GKBase
             return points;
         }
 
-		/// <summary>
-		/// 根据图片路径返回Texture2D
-		/// </summary>
-		/// <param name="size">Texture大小</param>
-		/// <param name="imagePath">图片路径</param>
-		/// <returns></returns>
-		public static Texture2D LoadTextureFromFile(int size, string imagePath)
+		public static void SaveTextureToFile(Texture2D texture, string imagePath)
 		{
-			Texture2D tex = new Texture2D(size, size);
-			FileStream files = new FileStream(imagePath, FileMode.Open);
-			byte[] imgByte = new byte[files.Length];
-			files.Read(imgByte, 0, imgByte.Length);
-			files.Close();
-			tex.LoadImage(imgByte);
-			return tex;
+			byte[] bytes = texture.EncodeToPNG();
+			FileStream file = new FileStream(imagePath, FileMode.Create);
+			BinaryWriter binary = new BinaryWriter(file);
+			binary.Write(bytes);
+			file.Close();
 		}
 
-        public static string [] TypesToString(Type [] types)
+		public static string [] TypesToString(Type [] types)
         {
             if (null == types)
                 return null;
@@ -1096,7 +1088,6 @@ namespace GKBase
             }
             return lst.ToArray();
         }
-
 	}
 }
 

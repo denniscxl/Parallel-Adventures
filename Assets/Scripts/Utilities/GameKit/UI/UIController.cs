@@ -6,9 +6,18 @@ namespace GKUI
 {
     public class UIController : MonoBehaviour
     {
-
         static UIController instance_;
-        public static UIController instance { get { return instance_; } }
+        public static UIController instance
+        {
+            get
+            {
+                if (null == instance_)
+                {
+                    instance_ = GK.GetOrAddComponent<UIController>(GK.TryLoadGameObject("Prefabs/Manager/UIController"));
+                }
+                return instance_;
+            }
+        }
 
         private static List<UIBase> list = new List<UIBase>();
         public Camera m_camera = null;
@@ -18,7 +27,6 @@ namespace GKUI
 
         void Awake()
         {
-            instance_ = this;
             DontDestroyOnLoad(this);
             list.Clear();
         }

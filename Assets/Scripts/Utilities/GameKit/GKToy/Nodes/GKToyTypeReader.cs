@@ -40,8 +40,11 @@ namespace GKToy
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 	public class NodeTypeTreeAttribute : Attribute
 	{
+		// 节点树路径.
 		public string treePath;
+		// 自定义图标路径.
 		public string iconPath;
+		// 是否在节点树中可见.
 		public bool isVisible;
 
 		public NodeTypeTreeAttribute(string _treePath, string _iconPath = "", bool _isVisible = true)
